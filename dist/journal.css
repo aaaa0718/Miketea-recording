@@ -1,4 +1,5 @@
 /* Paper, pastel postcards and brown-ink illustrations. */
+#motion-toggle{position:absolute;bottom:32px;left:10px;z-index:3;background:#fffdf4dd;border:1px solid #d5c7b4;border-radius:4px;padding:8px 10px;min-height:34px;font-size:10px;color:#796049}
 :root{--ink:#695540;--muted:#958473;--bg:#fcfae9;--line:#e6e0cc;--purple:#ded2e6}
 body{background-color:var(--bg);background-image:radial-gradient(#8d775b0b .6px,transparent .6px);background-size:5px 5px;color:var(--ink)}
 .shell{max-width:1200px;padding:0 52px}header{height:94px;border-bottom:1px solid #c8bda6}.logo{font-weight:500;letter-spacing:2px;font-size:22px}.logo-icon{background:none;border-radius:0;width:32px;height:42px}.logo-icon img{width:31px;height:38px}.wordmark{color:#978775;letter-spacing:2.5px;font-family:Georgia,serif;font-style:italic}.backup button{color:#81715f;font-size:11px;min-height:42px}.backup button:hover{background:#eee8d6}

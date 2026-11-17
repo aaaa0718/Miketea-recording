@@ -1,7 +1,47 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#fcfae9"><title>奶茶周记 · 每一杯小快乐</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="journal.css"></head>
 <body><div class="shell"><header><a class="logo" href="./"><span class="logo-icon"><img src="cup.svg" alt=""></span> 奶茶周记<span class="wordmark">TEA DIARY</span></a><div class="backup"><button id="export">↗ 导出备份</button><button id="import">↙ 导入</button><input type="file" id="file" accept="application/json,.json" hidden></div></header>
-<main><section class="intro"><div><div class="eyebrow">A LITTLE SIP OF HAPPINESS</div><h1>又喝奶茶了？<br>记上！记上！<span class="spark"><svg class="asterisk-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M16 3v26M3 16h26M7 7l18 18M7 25L25 7" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></span></h1><p>杯子可以扔，这杯得留名。</p><button class="primary" id="add">＋ 记一杯</button></div><div class="hero-art" aria-hidden="true"><span class="art-label">Tea &amp; little joys</span><img class="hero-illustration" src="tea-garden.svg" alt=""><div class="note">一杯，是生活的甜。<span>♡</span></div></div></section>
+<main><section class="intro"><div><div class="eyebrow">A LITTLE SIP OF HAPPINESS</div><h1>又喝奶茶了？<br>记上！记上！<span class="spark"><svg class="asterisk-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M16 3v26M3 16h26M7 7l18 18M7 25L25 7" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></span></h1><p>杯子可以扔，这杯得留名。</p><button class="primary" id="add">＋ 记一杯</button></div><div class="hero-art"><span class="art-label">Tea &amp; little joys</span><svg class="hero-illustration" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 380" fill="none">
+<style>
+.sway{transform-origin:208px 300px;animation:tea-sway 5s ease-in-out infinite}
+.float{animation:rabbit-float 4.5s ease-in-out infinite}
+.pearls circle{animation:pearl-bob 3s ease-in-out infinite}
+.pearls circle:nth-child(2){animation-delay:-.7s}
+.pearls circle:nth-child(3){animation-delay:-1.6s}
+.pearls circle:nth-child(4){animation-delay:-2.2s}
+.pearls circle:nth-child(5){animation-delay:-1.1s}
+@keyframes tea-sway{0%,100%{transform:rotate(-3.5deg)}50%{transform:rotate(3.5deg)}}
+@keyframes rabbit-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes pearl-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@media(prefers-reduced-motion:reduce){svg:not(.motion-enabled) .sway,svg:not(.motion-enabled) .float,svg:not(.motion-enabled) .pearls circle{animation:none}}
+.motion-paused .sway,.motion-paused .float,.motion-paused .pearls circle{animation-play-state:paused}
+</style>
+<g stroke="#796049" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M82 299c63-15 208-17 280 3" stroke="#c4bda1" stroke-dasharray="2 6"/>
+<g class="sway"><g transform="rotate(-9 208 215)">
+<path d="m147 145 13 158q48 18 96-1l16-157" fill="#fffdf0"/>
+<path d="m152 200 9 101q47 17 94-1l10-101q-54 11-113 1Z" fill="#eee5ac" stroke="none"/>
+<path d="m147 145 13 158q48 18 96-1l16-157"/>
+<path d="m236 141 13-77 9 2-12 77" fill="#d8c8e3"/>
+<path d="M139 144c-1-12 142-12 142 0v11c-45 9-95 8-142-1Z" fill="#fffcf3"/>
+<path d="M153 144q53 6 112 0" stroke-width="1"/>
+<ellipse cx="207" cy="229" rx="34" ry="37" fill="#fffdf4" stroke="#c0ae8d"/>
+<path d="M194 225c-17-44-10-55-3-47 5 8 8 28 9 35 2-27 10-42 15-35 5 9-4 33-7 39 17 4 22 28 6 34-22 8-37-12-20-26Z" fill="#fffdf4"/>
+<path d="M198 231h.1m10-1h.1" stroke-width="3"/>
+<path d="m202 236 2 2 2-2m-2 2v3" stroke-width="1.3"/>
+<g class="pearls" fill="#927761" stroke="none"><circle cx="177" cy="281" r="5"/><circle cx="193" cy="292" r="5"/><circle cx="211" cy="282" r="5"/><circle cx="231" cy="292" r="5"/><circle cx="245" cy="278" r="4"/></g>
+</g></g>
+<g class="float">
+<g transform="rotate(14 322 133)"><ellipse cx="323" cy="137" rx="42" ry="24" fill="#f1e8ad"/><ellipse cx="323" cy="136" rx="15" ry="8" fill="#e4f0f5"/><path d="m296 133 3-4m9 22 2-4m22-26 3 2m15 15 3-2m-26 18 3-2m-34-10 3 1" stroke-width="1.4"/><path d="M316 132c-2-6-4-13-2-18-8-16-5-27-1-23 4 6 5 15 5 18 2-16 6-25 9-20 2 6-1 16-3 21 8 5 12 13 6 23" fill="#fffdf4"/><path d="m319 118 .1 0m6 0 .1 0" stroke-width="2"/></g>
+</g>
+<path d="M83 170c-21-3-23 24-5 28 23 4 19-32 1-22-10 5-1 16 5 9" stroke="#b6a2c6"/>
+<path d="m307 250 10 7 10-7-10 18Z" fill="#d9cce8" stroke="none"/>
+<path d="M87 83c8-20 26-12 22 0-2 7-13 15-13 15S76 89 80 82c2-4 4-3 7 1Z" fill="#f2e9ad"/>
+<path d="m344 207 5 4m-3-13 5 1m-10-12 3-2m-235 65-5 3m5-15-6 1"/>
+<path d="m66 290 8-13 3 10 12-4-6 12m257 17 5-12 5 6 8-4-1 12" stroke="#a5ac85"/>
+</g>
+<text x="162" y="344" fill="#796049" font-family="Georgia,serif" font-style="italic" font-size="17" transform="rotate(-5 162 344)">a cup of lovely things.</text>
+</svg><div class="note">一杯，是生活的甜。<span>♡</span></div><button type="button" id="motion-toggle" aria-label="暂停奶茶动画">暂停动画</button></div></section>
 <div class="journal-ribbon" aria-hidden="true"><span>A LITTLE TEA, A LOT OF JOY</span><img src="cup.svg" alt=""><span>慢慢喝 · 慢慢记</span></div>
 <section class="week-heading"><div><h2>这一周的小快乐 <span id="week-badge">本周</span></h2><p id="range"></p></div><div class="week-controls"><button id="prev" aria-label="上一周">←</button><button id="today">回到本周</button><button id="next" aria-label="下一周">→</button></div></section>
 <section class="stats"><article class="stat yellow"><span>本周喝了 <span>☻</span></span><div><strong id="total">0</strong> 杯</div><p>每一杯，都值得被记住</p></article><article class="stat blue"><span>解锁品类 <span><svg class="asterisk-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M16 3v26M3 16h26M7 7l18 18M7 25L25 7" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></span></span><div><strong id="types">0</strong> 种</div><p>给日常多一点新鲜感</p></article><article class="stat purple"><span>本周心头好 <span>♡</span></span><div class="favorite" id="favorite">等待第一杯</div><p id="favorite-note">你的偏爱，会在这里出现</p></article></section>
