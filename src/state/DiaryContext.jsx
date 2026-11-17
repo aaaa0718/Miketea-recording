@@ -10,9 +10,10 @@ export function DiaryProvider({ children }) {
   const current = useRef(store);
   const [editor, setEditor] = useState(null);
   const [notice, setNotice] = useState('');
+  const [noticeKind, setNoticeKind] = useState('info');
   const timer = useRef();
-  const notify = useCallback((text) => {
-    setNotice(text); clearTimeout(timer.current);
+  const notify = useCallback((text, kind = 'info') => {
+    setNoticeKind(kind); setNotice(text); clearTimeout(timer.current);
     timer.current = setTimeout(() => setNotice(''), 4500);
   }, []);
   useEffect(() => {
@@ -33,7 +34,7 @@ export function DiaryProvider({ children }) {
     current.current = { records: next, error: '' };
     setStore(current.current);
   }
-  function save(record) { commit(rows => [...rows.filter(row => row.id !== record.id), record]); notify('这杯已归入 AA 名下。'); }
+  function save(record) { commit(rows => [...rows.filter(row => row.id !== record.id), record]); notify('这杯已归入 AA 名下。', 'saved'); }
   function remove(id) { commit(rows => rows.filter(row => row.id !== id)); notify('这杯记录已删除'); }
   function importBackup(text) {
     const imported = parseBackup(text); let added = 0;
@@ -42,6 +43,6 @@ export function DiaryProvider({ children }) {
     return added;
   }
   const openEditor = (record = null, date = dateKey(new Date())) => setEditor({ record, date, key: crypto.randomUUID() });
-  return <DiaryContext.Provider value={{ ...store, editor, openEditor, closeEditor: () => setEditor(null), save, remove, notify, notice, importBackup }}>{children}</DiaryContext.Provider>;
+  return <DiaryContext.Provider value={{ ...store, editor, openEditor, closeEditor: () => setEditor(null), save, remove, notify, notice, noticeKind, importBackup }}>{children}</DiaryContext.Provider>;
 }
 export function useDiary() { return useContext(DiaryContext); }

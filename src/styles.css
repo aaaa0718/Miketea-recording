@@ -118,3 +118,18 @@
   .home-details .stat-card > div { grid-column: 1; }
   .home-details .stat-note { grid-column: 2; grid-row: 1 / span 2; }
 }
+
+/* Small AA cameos share the hero's original watercolor atlas. */
+.aa-reaction { position: relative; display: block; flex: none; pointer-events: none; }
+.aa-reaction canvas { display: block; width: 100%; height: auto; }
+.aa-empty { padding: 20px 0 28px; }
+.aa-reaction--peek { width: 140px; height: 132px; margin: 0 auto 12px; overflow: hidden; }
+.aa-reaction--peek canvas { width: 112px; margin: 0 auto; animation: aa-peek-in 900ms ease-out both; }
+.aa-peek-paper { position: absolute; inset: auto 0 -9px; height: 35px; border: 1px solid #d8cbb3; border-radius: 6px 6px 0 0; background: #fffdf3; transform: rotate(-3deg); box-shadow: 0 -3px 8px #79654d08; }
+.aa-peek-paper::after { content: ''; position: absolute; width: 38px; height: 9px; background: #e7ddef; opacity: .85; left: 51px; top: -5px; transform: rotate(5deg); }
+.aa-saved-notice { position: fixed; z-index: 60; bottom: max(92px, calc(env(safe-area-inset-bottom) + 76px)); left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 12px; width: max-content; max-width: calc(100vw - 32px); padding: 10px 18px 10px 12px; border: 1px solid #cbb8d5; border-radius: 18px 18px 18px 5px; background: #fffdf5; color: #70557e; box-shadow: 0 6px 24px #70557e24; font-size: 14px; line-height: 1.6; pointer-events: none; animation: aa-notice-in 350ms ease-out both; }
+.aa-reaction--saved { width: 64px; margin-top: -24px; transform-origin: 50% 90%; animation: aa-happy-nod 1000ms 200ms ease-in-out both; }
+@keyframes aa-peek-in { from { transform: translateY(48px) rotate(-7deg); } to { transform: translateY(0) rotate(0); } }
+@keyframes aa-happy-nod { 0%, 100% { transform: rotate(0) translateY(0); } 35% { transform: rotate(-6deg) translateY(4px); } 65% { transform: rotate(3deg) translateY(-2px); } }
+@keyframes aa-notice-in { from { opacity: 0; margin-bottom: -10px; } to { opacity: 1; margin-bottom: 0; } }
+@media (prefers-reduced-motion: reduce) { .aa-reaction canvas, .aa-reaction--saved, .aa-saved-notice { animation: none; } }

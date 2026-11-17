@@ -5,11 +5,12 @@ import CalendarPage from './pages/CalendarPage.jsx';
 import RecordsPage from './pages/RecordsPage.jsx';
 import BackupPage from './pages/BackupPage.jsx';
 import RecordEditor from './components/RecordEditor.jsx';
+import AaReaction from './components/AaReaction.jsx';
 import { useDiary } from './state/DiaryContext.jsx';
 import { asset } from './lib/assets.js';
 
 export default function App() {
-  const { editor, error, notice } = useDiary();
+  const { editor, error, notice, noticeKind } = useDiary();
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }); }, [pathname]);
   return <div className="mx-auto max-w-[1200px] px-4 sm:px-8 lg:px-12">
@@ -22,6 +23,8 @@ export default function App() {
     <main id="main-content"><Routes><Route path="/" element={<HomePage />} /><Route path="/calendar" element={<CalendarPage />} /><Route path="/records" element={<RecordsPage />} /><Route path="/backup" element={<BackupPage />} /><Route path="*" element={<section className="py-20 text-center"><h1 className="text-xl">这一页还没有奶茶</h1><Link className="btn-primary mt-5 inline-block" to="/">回到本周</Link></section>} /></Routes></main>
     <footer className="mt-8 flex flex-col justify-between gap-3 border-t border-line py-7 text-[10px] text-muted sm:flex-row"><span>♧ AA的奶茶小账本</span><span>仅保存在当前浏览器 · 记得偶尔备份 ♡</span></footer>
     {editor && <RecordEditor key={editor.key} record={editor.record} date={editor.date} />}
-    {notice && <div className="fixed bottom-6 left-1/2 z-50 max-w-[90vw] -translate-x-1/2 rounded-md bg-ink px-5 py-3 text-center text-xs text-white shadow-lg" role="status">{notice}</div>}
+    {notice && (noticeKind === 'saved'
+      ? <div className="aa-saved-notice" role="status"><AaReaction mood="saved" /><span>{notice}</span></div>
+      : <div className="fixed bottom-6 left-1/2 z-50 max-w-[90vw] -translate-x-1/2 rounded-md bg-ink px-5 py-3 text-center text-xs text-white shadow-lg" role="status">{notice}</div>)}
   </div>;
 }
