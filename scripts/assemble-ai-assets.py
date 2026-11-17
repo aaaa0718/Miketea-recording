@@ -4,7 +4,7 @@ import hashlib
 import shutil
 
 root = Path(__file__).resolve().parents[1]
-target = root / 'dist' / 'vendor'
+target = root / 'public' / 'vendor'
 target.mkdir(exist_ok=True)
 model = Path('/private/tmp/tea-u2netp.onnx')
 assert hashlib.sha256(model.read_bytes()).hexdigest() == '309c8469258dda742793dce0ebea8e6dd393174f89934733ecc8b14c76f4ddd8'

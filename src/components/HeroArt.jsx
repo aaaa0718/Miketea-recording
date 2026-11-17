@@ -1,0 +1,34 @@
+export default function HeroArt() {
+  return <div className="hero-art">
+    <span className="art-label">Tea &amp; little joys</span>
+<svg className="hero-illustration motion-enabled" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 35 440 295" fill="none">
+
+<g stroke="#796049" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+<path d="M82 299c63-15 208-17 280 3" stroke="#c4bda1" strokeDasharray="2 6"/>
+<g className="sway"><g transform="rotate(-9 208 215)">
+<path d="m147 145 13 158q48 18 96-1l16-157" fill="#fffdf0"/>
+<path d="m152 200 9 101q47 17 94-1l10-101q-54 11-113 1Z" fill="#eee5ac" stroke="none"/>
+<path d="m147 145 13 158q48 18 96-1l16-157"/>
+<path d="m236 141 13-77 9 2-12 77" fill="#d8c8e3"/>
+<path d="M139 144c-1-12 142-12 142 0v11c-45 9-95 8-142-1Z" fill="#fffcf3"/>
+<path d="M153 144q53 6 112 0" strokeWidth="1"/>
+<ellipse cx="207" cy="229" rx="34" ry="37" fill="#fffdf4" stroke="#c0ae8d"/>
+<path d="M194 225c-17-44-10-55-3-47 5 8 8 28 9 35 2-27 10-42 15-35 5 9-4 33-7 39 17 4 22 28 6 34-22 8-37-12-20-26Z" fill="#fffdf4"/>
+<path d="M198 231h.1m10-1h.1" strokeWidth="3"/>
+<path d="m202 236 2 2 2-2m-2 2v3" strokeWidth="1.3"/>
+<g className="pearls" fill="#927761" stroke="none"><circle cx="177" cy="281" r="5"/><circle cx="193" cy="292" r="5"/><circle cx="211" cy="282" r="5"/><circle cx="231" cy="292" r="5"/><circle cx="245" cy="278" r="4"/></g>
+</g></g>
+<g className="float">
+<g transform="rotate(14 322 133)"><ellipse cx="323" cy="137" rx="42" ry="24" fill="#f1e8ad"/><ellipse cx="323" cy="136" rx="15" ry="8" fill="#e4f0f5"/><path d="m296 133 3-4m9 22 2-4m22-26 3 2m15 15 3-2m-26 18 3-2m-34-10 3 1" strokeWidth="1.4"/><path d="M316 132c-2-6-4-13-2-18-8-16-5-27-1-23 4 6 5 15 5 18 2-16 6-25 9-20 2 6-1 16-3 21 8 5 12 13 6 23" fill="#fffdf4"/><path d="m319 118 .1 0m6 0 .1 0" strokeWidth="2"/></g>
+</g>
+<path d="M83 170c-21-3-23 24-5 28 23 4 19-32 1-22-10 5-1 16 5 9" stroke="#b6a2c6"/>
+<path d="m307 250 10 7 10-7-10 18Z" fill="#d9cce8" stroke="none"/>
+<path d="M87 83c8-20 26-12 22 0-2 7-13 15-13 15S76 89 80 82c2-4 4-3 7 1Z" fill="#f2e9ad"/>
+<path d="m344 207 5 4m-3-13 5 1m-10-12 3-2m-235 65-5 3m5-15-6 1"/>
+<path d="m66 290 8-13 3 10 12-4-6 12m257 17 5-12 5 6 8-4-1 12" stroke="#a5ac85"/>
+</g>
+</svg>
+    <div className="art-caption"><span className="art-english">a cup of lovely things.</span><span className="art-subtitle">MILK TEA CLUB / 日常甜度收集所</span></div>
+    <div className="hero-note">一杯，是生活的甜。<span>♡</span></div>
+  </div>;
+}

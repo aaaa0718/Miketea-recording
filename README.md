@@ -1,50 +1,54 @@
 # 奶茶周记
 
-一个纯前端的奶茶记录工具，以低饱和黄色、蓝色、紫色搭配清新手账风格。
+使用 Vite、React、Tailwind CSS v4、React Router 的纯前端奶茶记录工具。
 
-## 功能
+在线访问：[奶茶周记](https://aaaa0718.github.io/Miketea-recording/)。
 
-- 按周查看杯数、品类数量和最常喝的品类
-- 每日打卡，新增、编辑和删除饮品记录
-- 记录品牌、饮品名、甜度、冰量和备注，支持自定义品类
-- 浏览器本地保存，以及 JSON 备份导入、导出
-- 适配桌面和手机屏幕
-- 奶茶贴纸月历：按月查看，每日多杯角标、当天详情和月度统计
-- 为每杯上传照片，自动压缩并添加白色贴纸描边，支持纯色背景去除与恢复原图
+## 开发
 
-## 制作奶茶贴纸
-
-点击「记一杯」中的「上传奶茶照片」，选择 JPG、PNG 或 WebP，默认在浏览器本地自动运行 AI 抠图。也可取消勾选自动抠图，手动点击「AI 自动抠图」。照片不上传服务器；首次使用需加载模型和推理组件。处理过程中可取消，不满意可恢复原图。手机性能、照片背景和透明杯边缘会影响速度及效果。
-
-模型使用 U²-Netp，推理使用 ONNX Runtime Web 1.20.1，均随站点自托管。许可和来源见 `dist/vendor-notices.txt`。推理运行在 Web Worker 中，采用单线程 WASM，兼容 GitHub Pages 无跨域隔离响应头的部署方式。纯色背景去除仍作为备用工具保留。
-
-AI 资源以 512KiB 分段下载，逐段进行 SHA-256 校验并写入浏览器 Cache Storage。网络失败时自动重试当前段，之后手动重试可复用完整分段。下载过程持续上报进度，不再使用两分钟总时限；只有长时间无进展才中止。浏览器禁止或清除缓存时，需要重新下载。更新模型或 WASM 后运行 `python3 scripts/split-ai-assets.py` 重建分段和清单。
-
-照片与记录一起保存在当前浏览器，JSON 导出包含照片。浏览器本地存储容量有限，保存失败时会提示并保留表单，建议定期备份。旧记录无需补照片也能正常使用。
-
-## 本地运行
-
-在线访问：https://aaaa0718.github.io/Miketea-recording/
-
-GitHub Actions 会在每次推送到 `main` 后自动将 `dist` 目录部署到 GitHub Pages。可在仓库 Actions 页面查看部署进度。
-
-无需安装依赖或构建。在项目目录运行：
+使用 Node.js 24、pnpm 11.25.0：
 
 ```sh
-python3 -m http.server 5173 --directory dist
+pnpm install --frozen-lockfile
+pnpm dev
+pnpm test
+pnpm build
+pnpm preview
 ```
 
-然后访问 http://localhost:5173 。
+访问终端输出的地址（包含 /Miketea-recording/ 前缀）。dist 是生成目录，不直接修改或提交。
 
-## 文件结构
+## 路由与结构
 
-- `dist/index.html`：页面结构
-- `dist/style.css`：样式及响应式布局
-- `dist/app.js`：记录、统计和备份逻辑
-- `.openai/hosting.json`：Sites 部署配置
+HashRouter 无需服务器重写，刷新子页面可直接访问。
 
-可将 `dist` 目录部署到静态网页托管服务。字体使用 Google Fonts，无法访问时使用系统字体。
+- #/：每周统计、3 杯额度、每日打卡和品类分布。
+- #/calendar：照片贴纸月历、每日详情与月度统计。
+- #/records：全部记录和搜索。
+- #/backup：JSON 备份导入导出。
+- src/pages：路由页面；src/components：表单、照片编辑、插画和列表。
+- src/state：数据、弹窗与通知；src/lib：日期、统计、校验和备份。
+- src/services：图片处理和可取消 AI 客户端。
+- src/styles.css：Tailwind 主题和自动播放动画。
+- public/ai：Worker 与续传下载器；public/vendor：固定模型、WASM 和许可。
+- tests：旧数据、备份、存储失败和日期边界测试。
 
-## 数据保存
+## 数据
 
-记录通过 `localStorage` 保存于当前浏览器和网站来源下，不上传服务器，不会自动跨设备或跨域名同步。清除浏览器数据可能导致记录丢失，请定期导出 JSON 备份。更换访问地址时，可在旧地址导出后到新地址导入。
+沿用 localStorage 的 tea-diary-v1 键和 {version:1,records} 备份格式，旧照片和记录无需迁移。导入按 ID 合并且保留已有内容。损坏数据不会被空列表覆盖；存储满时明确报错并保留表单。
+
+记录仅在当前浏览器，不自动跨设备同步。清理浏览器前请导出备份，照片也包含在备份中。
+
+## 抠图
+
+照片在本机压缩和处理，不上传服务器。支持 AI 自动抠图、纯色背景去除、恢复原图和取消。U²-Netp 与 ONNX Runtime Web 1.20.1 使用单线程 WASM Worker，兼容 GitHub Pages。
+
+首次约下载 16MB；512KiB 分段下载、SHA-256 校验和缓存，失败可复用完整分段，不设两分钟总下载时限。浏览器禁止缓存时无法续传。复杂背景、透明杯和设备性能会影响效果与速度。
+
+来源与许可见 public/vendor-notices.txt。更新模型后运行 python3 scripts/split-ai-assets.py 重建分段。assemble-ai-assets.py 供维护者从临时下载文件组装固定版本资源，日常构建无需运行。
+
+## 部署
+
+main 推送后，GitHub Actions 安装锁定依赖、测试、构建并部署 dist 到 GitHub Pages。修改仓库名时同步修改 vite.config.js 的 base。模型按需加载，不加入首页 JS 包。
+
+重构计划见 REFACTOR_PLAN.md。

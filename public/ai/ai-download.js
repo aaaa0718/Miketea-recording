@@ -3,12 +3,12 @@ async function digestBytes(bytes){return Array.from(new Uint8Array(await crypto.
 async function loadAIAssets(id){
  const report=message=>postMessage({id,type:'progress',message});
  let cache;try{cache=await caches.open('tea-ai-chunks-v1')}catch{}
- const manifestResponse=await fetch('./vendor/chunks/manifest.json?v=1',{signal:AbortSignal.timeout(60000)});
+ const manifestResponse=await fetch('../vendor/chunks/manifest.json?v=1',{signal:AbortSignal.timeout(60000)});
  if(!manifestResponse.ok)throw Error('无法获取组件清单，请检查网络后重试。');
  const manifest=await manifestResponse.json(),total=manifest.wasm.size+manifest.model.size;let completed=0;
  const progress=(bytes=0)=>report(`正在准备 AI 组件 ${Math.min(100,Math.floor((completed+bytes)/total*100))}% · 已完成部分会保留`);
  async function part(chunk){
-  const url=new URL('./vendor/chunks/'+chunk.file,self.location.href).href;
+  const url=new URL('../vendor/chunks/'+chunk.file,self.location.href).href;
   if(cache){const saved=await cache.match(url);if(saved){const bytes=await saved.arrayBuffer();if(bytes.byteLength===chunk.size&&await digestBytes(bytes)===chunk.sha256){completed+=bytes.byteLength;progress();return new Uint8Array(bytes)}await cache.delete(url)}}
   for(let attempt=0;attempt<3;attempt++){
    try{

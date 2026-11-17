@@ -1,9 +1,9 @@
 /* U²-Netp inference runs in a worker so the form stays responsive. */
-importScripts('./vendor/ort.wasm.min.js');
-importScripts('./ai-download.js?v=resume1');
+importScripts('../vendor/ort.wasm.min.js');
+importScripts('./ai-download.js?v=react1');
 ort.env.wasm.numThreads=1;
 ort.env.wasm.proxy=false;
-ort.env.wasm.wasmPaths=new URL('./vendor/',self.location.href).href;
+ort.env.wasm.wasmPaths=new URL('../vendor/',self.location.href).href;
 let sessionPromise;
 async function session(id){
  if(!sessionPromise)sessionPromise=(async()=>{

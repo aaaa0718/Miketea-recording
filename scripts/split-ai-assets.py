@@ -3,7 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 
-vendor = Path(__file__).resolve().parents[1] / 'dist' / 'vendor'
+vendor = Path(__file__).resolve().parents[1] / 'public' / 'vendor'
 folder = vendor / 'chunks'
 folder.mkdir(exist_ok=True)
 manifest = {}
