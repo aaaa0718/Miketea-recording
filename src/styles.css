@@ -72,15 +72,12 @@
 .hero-copy { position: relative; grid-column: 1; grid-row: 1; align-self: end; }
 .hero-copy::before { content: ''; position: absolute; left: 3px; top: -30px; width: 66px; height: 18px; background: repeating-linear-gradient(95deg, #d7c6e2a8 0 4px, #dfd2e8a8 4px 7px); clip-path: polygon(3% 0, 97% 3%, 100% 22%, 97% 43%, 100% 66%, 97% 100%, 0 96%, 3% 73%, 0 51%, 3% 25%); transform: rotate(-9deg); pointer-events: none; }
 .hero-doodle { display: block; position: absolute; width: clamp(90px, 12vw, 160px); height: auto; right: -6px; bottom: -42px; pointer-events: none; }
-.hero-speech { display: none; }
 .hero-flower { position: absolute; width: 62px; height: 62px; right: -19px; bottom: -18px; transform: rotate(13deg); pointer-events: none; z-index: 2; }
 .hero-add { grid-column: 1; grid-row: 2; justify-self: start; align-self: start; }
 .hero-layout > .hero-art { grid-column: 2; grid-row: 1 / span 2; }
 .mobile-quick-add { position: fixed; right: 18px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 30; min-height: 48px; padding: 12px 20px; border-radius: 999px; background: #80648e; color: white; font-size: 14px; font-weight: 600; box-shadow: 0 4px 18px #69554030; border: 1px solid #fff9; }
 @media(max-width: 639px) {
   .hero-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px 8px; padding: 32px 0 20px; }
-  .hero-speech { display: block; position: absolute; right: -20px; top: -68px; z-index: 3; width: 100px; padding: 8px 10px; border: 1.3px solid #b29a80; border-radius: 15px 12px 16px 10px; background: #fffdf3; color: #80664f; font-size: 12px; line-height: 1.6; text-align: center; transform: rotate(-4deg); box-shadow: 2px 3px 0 #d8cbb52b; pointer-events: none; }
-  .hero-speech::after { content: ''; position: absolute; right: -6px; bottom: 10px; width: 11px; height: 11px; background: #fffdf3; border-right: 1.3px solid #b29a80; border-bottom: 1.3px solid #b29a80; transform: skewY(20deg) rotate(-35deg); }
   .hero-doodle > path:last-child { display: none; }
   .hero-copy { position: relative; align-self: center; min-width: 0; }
   .hero-copy::before { top: -23px; left: 2px; width: 48px; height: 14px; }
@@ -133,3 +130,15 @@
 @keyframes aa-happy-nod { 0%, 100% { transform: rotate(0) translateY(0); } 35% { transform: rotate(-6deg) translateY(4px); } 65% { transform: rotate(3deg) translateY(-2px); } }
 @keyframes aa-notice-in { from { opacity: 0; margin-bottom: -10px; } to { opacity: 1; margin-bottom: 0; } }
 @media (prefers-reduced-motion: reduce) { .aa-reaction canvas, .aa-reaction--saved, .aa-saved-notice { animation: none; } }
+
+.drink-stickers { position: absolute; right: 5px; top: -30px; width: 65px; height: 245px; display: flex; flex-direction: column; justify-content: space-between; pointer-events: none; }
+.drink-stickers svg { width: 58px; height: 70px; overflow: visible; filter: drop-shadow(2px 3px 0 #fffdf2); }
+.drink-latte { transform: rotate(-12deg); }
+.drink-americano { transform: translateX(12px) rotate(10deg); }
+.drink-milk-tea { transform: rotate(-7deg); }
+@media(max-width: 639px) {
+ .hero-copy h1 { font-size: clamp(20px, 5.6vw, 28px); }
+ .drink-stickers { width: 40px; height: 170px; right: -3px; top: -42px; z-index: 3; }
+ .drink-stickers svg { width: 38px; height: 49px; }
+ .drink-americano { transform: translateX(4px) rotate(10deg); }
+}

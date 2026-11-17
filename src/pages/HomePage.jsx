@@ -1,3 +1,4 @@
+import DrinkStickers from '../components/DrinkStickers.jsx';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import HeroArt from '../components/HeroArt.jsx';
@@ -24,7 +25,7 @@ export default function HomePage() {
   const changeWeek = date => { setWeek(date); setSelected(null); };
   return <>
     <section className="hero-layout">
-      <div className="hero-copy"><p className="hero-eyebrow mb-4 font-serif text-[9px] tracking-[.22em] text-muted">AA’S CUP LOG</p><h1 className="text-[30px] font-medium leading-relaxed tracking-wider sm:text-[38px]">今天这杯，<br />有点来头。</h1><p className="hero-description mt-4 text-xs text-muted">杯杯记录在册</p><div className="hero-speech">这杯不错，<br />下次还点</div><svg className="hero-doodle" viewBox="0 0 130 56" fill="none" aria-hidden="true" focusable="false"><path d="M5 15c18 21 45 24 58 11 12-13-8-25-14-12-9 19 34 30 57 10" stroke="#b7a486" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="2 5" /><path d="m108 9 3-7 3 7 7 3-7 3-3 7-3-7-7-3Z" fill="#ded0e7" stroke="#baa3c6" strokeWidth="1.2" strokeLinejoin="round" /><path d="m121 35 2-5 2 5 5 2-5 2-2 5-2-5-5-2Z" fill="#f1e5ad" stroke="#d4bf7f" strokeWidth="1" strokeLinejoin="round" /></svg></div>
+      <div className="hero-copy"><p className="hero-eyebrow mb-4 font-serif text-[9px] tracking-[.22em] text-muted">AA’S CUP LOG</p><h1 className="text-[30px] font-medium leading-relaxed tracking-wider sm:text-[38px]">今天这杯，<br />有点来头。</h1><p className="hero-description mt-4 text-xs text-muted">杯杯记录在册</p><DrinkStickers /><svg className="hero-doodle" viewBox="0 0 130 56" fill="none" aria-hidden="true" focusable="false"><path d="M5 15c18 21 45 24 58 11 12-13-8-25-14-12-9 19 34 30 57 10" stroke="#b7a486" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="2 5" /><path d="m108 9 3-7 3 7 7 3-7 3-3 7-3-7-7-3Z" fill="#ded0e7" stroke="#baa3c6" strokeWidth="1.2" strokeLinejoin="round" /><path d="m121 35 2-5 2 5 5 2-5 2-2 5-2-5-5-2Z" fill="#f1e5ad" stroke="#d4bf7f" strokeWidth="1" strokeLinejoin="round" /></svg></div>
       <button ref={primaryButton} className="btn-primary hero-add" onClick={() => openEditor()}>＋ 记一杯</button>
       <HeroArt />
     </section>
