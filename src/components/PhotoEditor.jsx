@@ -38,11 +38,11 @@ export default function PhotoEditor({ photo, onChange, onBusy }) {
       if (auto) await ai(source, controls); else controls.progress('贴纸准备好了，保存后贴进日历。');
     });
   }
-  return <section className="rounded-xl border border-dashed border-lilac-dark/40 bg-lilac/30 p-4" aria-label="奶茶照片">
+  return <section className="rounded-xl border border-dashed border-lilac-dark/40 bg-lilac/30 p-4" aria-label="饮品照片">
     <div className="flex items-start gap-3">
-      <div className="checkerboard grid h-28 w-20 shrink-0 place-items-center rounded-lg p-2"><img className="h-full w-full object-contain" src={photo || asset('cup.svg')} alt="奶茶贴纸预览" /></div>
+      <div className="checkerboard grid h-28 w-20 shrink-0 place-items-center rounded-lg p-2"><img className="h-full w-full object-contain" src={photo || asset('cup.svg')} alt="饮品贴纸预览" /></div>
       <div className="min-w-0 flex-1">
-        <label className="btn-primary inline-block cursor-pointer text-xs">＋ 上传奶茶照片<input aria-label="上传奶茶照片" className="sr-only" type="file" accept="image/jpeg,image/png,image/webp" onChange={upload} disabled={busy} /></label>
+        <label className="btn-primary inline-block cursor-pointer text-xs">＋ 上传饮品照片<input aria-label="上传饮品照片" className="sr-only" type="file" accept="image/jpeg,image/png,image/webp" onChange={upload} disabled={busy} /></label>
         <div className="mt-3 flex flex-wrap gap-1.5">
           <button className="btn-mini" type="button" disabled={!original || busy} onClick={() => process(controls => ai(original, controls))}>AI 自动抠图</button>
           <button className="btn-mini" type="button" disabled={!original || busy} onClick={() => process(async ({ current, progress }) => { const result = await removeSolidBackground(original); if (current()) onChange(result); progress('背景已处理，不满意可以恢复原图。'); })}>去除纯色背景</button>

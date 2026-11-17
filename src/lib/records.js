@@ -2,7 +2,7 @@ import { isDate, dateKey, offsetDay, monthPrefix } from './dates.js';
 
 export const STORAGE_KEY = 'tea-diary-v1';
 export const WEEKLY_LIMIT = 3;
-export const CATEGORIES = ['鲜奶茶', '传统奶茶', '果茶', '纯茶', '其他'];
+export const CATEGORIES = ['鲜奶茶', '传统奶茶', '果茶', '纯茶', '咖啡', '其他'];
 export const SUGARS = ['未选择', '无糖', '三分糖', '五分糖', '七分糖', '全糖'];
 export const ICES = ['未选择', '正常冰', '少冰', '去冰', '常温', '热饮'];
 export function validRecord(record) {
@@ -28,7 +28,7 @@ export function writeStore(storage, records) {
 export function parseBackup(text) {
   if (text.length > 25e6) throw new Error('备份文件过大，请选择 25MB 以内的备份。');
   const data = JSON.parse(text);
-  if (data?.version !== 1 || !Array.isArray(data.records) || !data.records.every(validRecord)) throw new Error('不是有效的奶茶周记备份文件。');
+  if (data?.version !== 1 || !Array.isArray(data.records) || !data.records.every(validRecord)) throw new Error('不是有效的杯杯小账本备份文件。');
   return data.records;
 }
 export function mergeRecords(current, imported) {
