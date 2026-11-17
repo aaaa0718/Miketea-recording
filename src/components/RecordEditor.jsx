@@ -32,8 +32,8 @@ export default function RecordEditor({ record, date }) {
       <p className="mb-5 mt-1 text-xs text-muted">今天的快乐，是什么味道？</p>
       <PhotoEditor photo={form.photo} onChange={value => change('photo', value)} onBusy={setBusy} />
       <div className="mt-5 grid grid-cols-2 gap-4">
-        <label className="field">日期 *<input name="date" type="date" required value={form.date} onChange={event => change('date', event.target.value)} /></label>
-        <label className="field">品类 *<select name="category" value={custom ? '__custom' : form.category} onChange={event => { setCustom(event.target.value === '__custom'); if (event.target.value !== '__custom') change('category', event.target.value); }}>{categories.map(c => <option key={c}>{c}</option>)}<option value="__custom">＋ 自定义品类</option></select></label>
+        <label className="field col-span-2 sm:col-span-1">日期 *<input name="date" type="date" required value={form.date} onChange={event => change('date', event.target.value)} /></label>
+        <label className="field col-span-2 sm:col-span-1">品类 *<select name="category" value={custom ? '__custom' : form.category} onChange={event => { setCustom(event.target.value === '__custom'); if (event.target.value !== '__custom') change('category', event.target.value); }}>{categories.map(c => <option key={c}>{c}</option>)}<option value="__custom">＋ 自定义品类</option></select></label>
         {custom && <label className="field col-span-2">自定义品类 *<input autoFocus required maxLength={20} value={customCategory} onChange={event => setCustomCategory(event.target.value)} placeholder="例如：酸奶饮品" /></label>}
         <label className="field">品牌<input name="brand" maxLength={40} value={form.brand} onChange={event => change('brand', event.target.value)} placeholder="在哪家遇见它？" /></label>
         <label className="field">饮品名<input name="name" maxLength={60} value={form.name} onChange={event => change('name', event.target.value)} placeholder="这杯叫什么名字？" /></label>
