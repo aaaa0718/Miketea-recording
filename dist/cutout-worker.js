@@ -1,19 +1,16 @@
 /* U²-Netp inference runs in a worker so the form stays responsive. */
 importScripts('./vendor/ort.wasm.min.js');
+importScripts('./ai-download.js?v=resume1');
 ort.env.wasm.numThreads=1;
 ort.env.wasm.proxy=false;
 ort.env.wasm.wasmPaths=new URL('./vendor/',self.location.href).href;
 let sessionPromise;
 async function session(id){
  if(!sessionPromise)sessionPromise=(async()=>{
-  postMessage({id,type:'progress',message:'正在加载抠图模型…'});
-  const response=await fetch('./vendor/u2netp.onnx');
-  if(!response.ok)throw Error('模型下载失败，请检查网络后重试。');
-  const reader=response.body.getReader(),chunks=[];let loaded=0;const total=Number(response.headers.get('content-length'))||4574888;
-  while(true){const {done,value}=await reader.read();if(done)break;chunks.push(value);loaded+=value.length;postMessage({id,type:'progress',message:`正在加载模型 ${Math.min(100,Math.round(loaded/total*100))}%`})}
-  const bytes=new Uint8Array(loaded);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length}
+  const assets=await loadAIAssets(id);
+  ort.env.wasm.wasmBinary=assets.wasm;
   postMessage({id,type:'progress',message:'正在启动 AI，首次使用请稍等…'});
-  return ort.InferenceSession.create(bytes,{executionProviders:['wasm'],graphOptimizationLevel:'all'});
+  return ort.InferenceSession.create(assets.model,{executionProviders:['wasm'],graphOptimizationLevel:'all'});
  })().catch(e=>{sessionPromise=null;throw e});
  return sessionPromise;
 }
