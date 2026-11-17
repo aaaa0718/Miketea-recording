@@ -33,7 +33,7 @@ export function DiaryProvider({ children }) {
     current.current = { records: next, error: '' };
     setStore(current.current);
   }
-  function save(record) { commit(rows => [...rows.filter(row => row.id !== record.id), record]); notify('这杯小快乐，记下啦 ♡'); }
+  function save(record) { commit(rows => [...rows.filter(row => row.id !== record.id), record]); notify('记下了，下次点单有参考。'); }
   function remove(id) { commit(rows => rows.filter(row => row.id !== id)); notify('这杯记录已删除'); }
   function importBackup(text) {
     const imported = parseBackup(text); let added = 0;

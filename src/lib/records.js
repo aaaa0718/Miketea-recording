@@ -46,5 +46,9 @@ export function rankRecords(records, key = record => record.category) {
 }
 export const newestFirst = (records) => [...records].sort((a, b) => b.date.localeCompare(a.date));
 export function budgetText(count) {
-  return count < WEEKLY_LIMIT ? `还剩 ${WEEKLY_LIMIT - count} 杯额度，慢慢安排。` : count === WEEKLY_LIMIT ? '本周 3 杯已喝完，下周再续杯。' : `本周已超出 ${count - WEEKLY_LIMIT} 杯，下周再安排。`;
+  if (count === 0) return '本周名额充足，先看看菜单。';
+  if (count === 1) return '还有 2 杯的发挥空间。';
+  if (count === 2) return '最后一个位置，留给哪杯？';
+  if (count === WEEKLY_LIMIT) return '本周收杯。';
+  return `超出 ${count - WEEKLY_LIMIT} 杯。多出来的这杯，也不能漏记。`;
 }
