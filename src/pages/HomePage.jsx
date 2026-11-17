@@ -24,7 +24,7 @@ export default function HomePage() {
   const changeWeek = date => { setWeek(date); setSelected(null); };
   return <>
     <section className="hero-layout">
-      <div className="hero-copy"><p className="hero-eyebrow mb-4 font-serif text-[9px] tracking-[.22em] text-muted">AA’S TEA LOG</p><h1 className="text-[30px] font-medium leading-relaxed tracking-wider sm:text-[38px]">今天这杯，<br />有点来头。</h1><p className="hero-description mt-4 text-xs text-muted">可能是新品，也可能是路过。</p></div>
+      <div className="hero-copy"><p className="hero-eyebrow mb-4 font-serif text-[9px] tracking-[.22em] text-muted">AA’S TEA LOG</p><h1 className="text-[30px] font-medium leading-relaxed tracking-wider sm:text-[38px]">今天这杯，<br />有点来头。</h1><p className="hero-description mt-4 text-xs text-muted">杯杯记录在册</p></div>
       <button ref={primaryButton} className="btn-primary hero-add" onClick={() => openEditor()}>＋ 记一杯</button>
       <HeroArt />
     </section>
