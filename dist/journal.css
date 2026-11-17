@@ -1,4 +1,15 @@
 /* Paper, pastel postcards and brown-ink illustrations. */
+.weekly-budget{background:#fffdf4;border:1px solid #e2dac7;padding:18px 22px;margin:0 0 27px;border-radius:4px;box-shadow:3px 4px 0 #dcd5c324}
+.budget-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.budget-heading h2{font-size:14px;letter-spacing:.5px}.budget-heading h2 span{font-size:10px;color:#99816a;margin-left:10px;font-weight:400}
+#budget-count{font-family:Georgia,'Noto Sans SC',serif;font-size:16px;font-weight:400;color:#887196;white-space:nowrap}
+.budget-track{height:14px;background:#eeeadd;border:1px solid #dfd6c3;border-radius:9px;position:relative;overflow:hidden}
+#budget-fill{width:0;height:100%;background:#cbb8dc;border-radius:8px;transition:width .35s ease}
+.budget-tick{position:absolute;top:0;bottom:0;width:2px;background:#fffdf4}.tick-one{left:33.333%}.tick-two{left:66.666%}
+#budget-note{margin:11px 0 0;font-size:11px;color:#99816a;line-height:1.7}
+.over-budget #budget-fill{background:#d4aaa0}.over-budget #budget-count,.over-budget #budget-note{color:#9c6658}
+@media(max-width:600px){.weekly-budget{padding:16px 13px;margin-bottom:24px}.budget-heading h2{font-size:13px}.budget-heading h2 span{font-size:9px;margin-left:6px}#budget-count{font-size:14px}#budget-note{font-size:10px}}
+@media(prefers-reduced-motion:reduce){#budget-fill{transition:none}}
 .empty-icon img{transform-origin:50% 85%;animation:empty-cup-dance 2.6s ease-in-out infinite}
 @keyframes empty-cup-dance{0%,100%{transform:translateY(0) rotate(-10deg)}50%{transform:translateY(-10px) rotate(10deg)}}
 .motion-paused .empty-icon img{animation-play-state:paused}
