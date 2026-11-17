@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import puppetUrl from '../assets/tea-girl-puppet.png';
+// Inline the optimized atlas so rendering never waits on a separate image request.
+import puppetUrl from '../assets/tea-girl-puppet.webp?inline';
 import { drawTeaGirl } from '../lib/teaGirlAnimation.js';
 
 export default function TeaGirl() {
@@ -33,7 +34,7 @@ export default function TeaGirl() {
     };
     image.onerror = () => { clearTimeout(timer); fail(); };
     timer = setTimeout(fail, 30000);
-    image.src = attempt ? `${puppetUrl}?retry=${attempt}` : puppetUrl;
+    image.src = puppetUrl;
     return () => {
       disposed = true; cancelAnimationFrame(frame); clearTimeout(timer);
       image.onload = null; image.onerror = null;
@@ -41,8 +42,8 @@ export default function TeaGirl() {
   }, [attempt]);
   return <div className="tea-girl tea-canvas-wrap">
     <canvas ref={canvas} width="640" height="900" className="tea-canvas" role="img" aria-label="女孩抬杯吸奶茶，放下杯子后开心微笑" />
-    {status !== 'ready' && <div className="tea-image-status" role="status">
-      {status === 'loading' ? '小女孩加载中…' : <button className="btn-small" onClick={() => setAttempt(value => value + 1)}>重新加载小女孩</button>}
+    {status === 'error' && <div className="tea-image-status" role="status">
+      <button className="btn-small" onClick={() => setAttempt(value => value + 1)}>重新加载小女孩</button>
     </div>}
   </div>;
 }
