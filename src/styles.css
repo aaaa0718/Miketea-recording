@@ -52,13 +52,12 @@
 .hero-illustration { display: block; width: 100%; height: auto; aspect-ratio: 440 / 295; }
 .tea-girl { display: block; width: 80%; height: auto; aspect-ratio: 320 / 450; margin: 0 auto; overflow: visible; background: transparent; }
 .tea-puppet { --sip-duration: 7.6s; }
-.puppet-head { transform-origin: 168px 267px; animation: puppet-head var(--sip-duration) ease-in-out infinite; }
+.puppet-head { transform: none; }
 .puppet-arms { animation: puppet-arms var(--sip-duration) ease-in-out infinite; }
 .puppet-face-happy { opacity: 0; animation: puppet-happy var(--sip-duration) linear infinite; }
 .puppet-sip-mouth { opacity: 0; animation: puppet-mouth var(--sip-duration) linear infinite; }
 .puppet-joy { opacity: 0; transform-origin: 277px 110px; animation: puppet-joy var(--sip-duration) ease-in-out infinite; }
-@keyframes puppet-head { 0%,12%,96%,100% { transform: translateY(0) rotate(0deg); } 29%,43% { transform: translateY(7px) rotate(0deg); } 56%,62% { transform: translateY(0) rotate(0deg); } 73%,83% { transform: translateY(-3px) rotate(-2deg); } }
-@keyframes puppet-arms { 0%,12%,57%,100% { transform: translateY(0); } 29%,43% { transform: translateY(-27px); } }
+@keyframes puppet-arms { 0%,12%,57%,100% { transform: translateY(0); } 29%,43% { transform: translateY(-34px); } }
 @keyframes puppet-happy { 0%,62%,94%,100% { opacity: 0; } 65%,90% { opacity: 1; } }
 @keyframes puppet-mouth { 0%,19%,51%,100% { opacity: 0; } 27%,44% { opacity: 1; } }
 @keyframes puppet-joy { 0%,65%,95%,100% { opacity: 0; transform: translateY(4px) scale(.75); } 75%,85% { opacity: .9; transform: translateY(-5px) scale(1); } }
