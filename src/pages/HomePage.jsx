@@ -28,7 +28,7 @@ export default function HomePage() {
       <button ref={primaryButton} className="btn-primary hero-add" onClick={() => openEditor()}>＋ 记一杯</button>
       <HeroArt />
     </section>
-    <div className="grid-paper mb-8 hidden sm:flex items-center justify-center gap-4 border-y border-line py-3 font-serif text-[9px] tracking-wider text-muted sm:gap-7 sm:text-xs"><span>ONE CUP, ONE STORY</span><img className="h-7 w-5 -rotate-12" src={asset('cup.svg')} alt="" /><span className="text-[9px]">喝过的，记一下</span></div>
+    <div className="grid-paper mb-8 hidden sm:flex items-center justify-center gap-4 border-y border-line py-3 text-sm tracking-wider text-muted"><img className="h-7 w-5 -rotate-12" src={asset('cup.svg')} alt="" /><span>AA的续杯现场</span></div>
     <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h2 className="text-lg font-medium">本周喝到哪了</h2><p className="mt-2 text-[11px] text-muted">{week.getFullYear()} 年 {shortDate(week)} — {shortDate(end)}</p></div><div className="flex gap-1"><button className="btn-icon" aria-label="上一周" onClick={() => changeWeek(offsetDay(week, -7))}>←</button><button className="btn-small" onClick={() => changeWeek(weekStart(new Date()))}>回到本周</button><button className="btn-icon" aria-label="下一周" onClick={() => changeWeek(offsetDay(week, 7))}>→</button></div></div>
     <WeeklyBudget count={items.length} />
     <section className="mb-7 grid grid-cols-3 gap-2.5 sm:gap-5" aria-label="本周统计">
