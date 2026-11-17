@@ -87,4 +87,24 @@
   .hero-add { grid-column: 1 / -1; width: 100%; min-height: 50px; background: #80648e; color: #fff; font-size: 16px; font-weight: 600; box-shadow: 0 4px 0 #c9bbd180; }
   .hero-add:hover, .mobile-quick-add:hover { background: #70557e; }
   main { padding-bottom: 80px; }
+  .home-details { font-size: 14px; }
+  .home-details .text-muted, .record-list .text-muted { color: #806b55; }
+  .home-details h2 { font-size: 17px; }
+  .home-details .text-xs, .home-details [class~="text-[11px]"], .home-details [class~="text-[10px]"], .record-list .text-xs, .record-list [class~="text-[11px]"], .record-list [class~="text-[10px]"] { font-size: 13px; line-height: 1.65; }
+  .home-details .stat-card { padding: 18px 10px; }
+  .home-details .stat-card h3 { font-size: 12px; }
+  .home-details .stat-note { font-size: 12px; line-height: 1.8; }
+  .stat-note span { display: block; white-space: nowrap; }
+  .home-details .week-day { padding: 12px 1px; }
+  .home-details .week-day > span:first-child { font-size: 12px; }
+  .home-details .week-day .text-base { font-size: 19px; }
+  .home-details .week-status { display: grid; align-content: center; min-height: 36px; width: 100%; font-size: 12px; line-height: 1.5; text-wrap: balance; }
+  .record-list .text-sm { font-size: 15px; }
+}
+@media(max-width: 359px) {
+  .home-details [aria-label="本周统计"] { grid-template-columns: 1fr; gap: 14px; }
+  .home-details .stat-card { display: grid; grid-template-columns: 1fr 1fr; align-items: center; column-gap: 12px; }
+  .home-details .stat-card h3 { grid-column: 1; }
+  .home-details .stat-card > div { grid-column: 1; }
+  .home-details .stat-note { grid-column: 2; grid-row: 1 / span 2; }
 }

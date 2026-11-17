@@ -29,6 +29,7 @@ export default function HomePage() {
       <HeroArt />
     </section>
     <div className="grid-paper mb-8 hidden sm:flex items-center justify-center gap-4 border-y border-line py-3 text-sm tracking-wider text-muted"><img className="h-7 w-5 -rotate-12" src={asset('cup.svg')} alt="" /><span>AA的续杯现场</span></div>
+    <div className="home-details">
     <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h2 className="text-lg font-medium">本周喝到哪了</h2><p className="mt-2 text-[11px] text-muted">{week.getFullYear()} 年 {shortDate(week)} — {shortDate(end)}</p></div><div className="flex gap-1"><button className="btn-icon" aria-label="上一周" onClick={() => changeWeek(offsetDay(week, -7))}>←</button><button className="btn-small" onClick={() => changeWeek(weekStart(new Date()))}>回到本周</button><button className="btn-icon" aria-label="下一周" onClick={() => changeWeek(offsetDay(week, 7))}>→</button></div></div>
     <WeeklyBudget count={items.length} />
     <section className="mb-7 grid grid-cols-3 gap-2.5 sm:gap-5" aria-label="本周统计">
@@ -38,15 +39,16 @@ export default function HomePage() {
     </section>
     <section className="paper-panel mb-6"><div className="flex items-center justify-between"><h2 className="text-sm font-medium">一周打卡</h2><Link to="/calendar" className="text-[11px] text-muted underline-offset-4 hover:underline">查看贴纸月历 →</Link></div><div className="mt-5 grid grid-cols-7 gap-1 sm:gap-3">{Array.from({ length: 7 }, (_, i) => {
       const date = offsetDay(week, i), key = dateKey(date), cups = items.filter(row => row.date === key);
-      return <button key={key} className={`week-day ${selected === key ? 'border-lilac-dark bg-lilac/40' : key === dateKey(new Date()) ? 'border-sky-dark bg-sky/50' : 'border-line bg-cream'}`} aria-label={`${shortDate(date)}，${cups.length}杯`} aria-pressed={selected === key} onClick={() => setSelected(selected === key ? null : key)}><span className="text-[9px] text-muted">周{'一二三四五六日'[i]}</span><span className="my-2 font-serif text-base">{date.getDate()}</span><img className={`mb-2 h-8 w-7 object-contain ${cups.length ? '' : 'opacity-30'}`} src={photoSrc(cups.at(-1))} alt="" /><span className="text-[8px] text-muted">{cups.length ? `${cups.length} 杯` : '还没记录'}</span></button>;
+      return <button key={key} className={`week-day ${selected === key ? 'border-lilac-dark bg-lilac/40' : key === dateKey(new Date()) ? 'border-sky-dark bg-sky/50' : 'border-line bg-cream'}`} aria-label={`${shortDate(date)}，${cups.length}杯`} aria-pressed={selected === key} onClick={() => setSelected(selected === key ? null : key)}><span className="text-[9px] text-muted">周{'一二三四五六日'[i]}</span><span className="my-2 font-serif text-base">{date.getDate()}</span><img className={`mb-2 h-8 w-7 object-contain ${cups.length ? '' : 'opacity-30'}`} src={photoSrc(cups.at(-1))} alt="" /><span className="week-status text-[8px] text-muted">{cups.length ? `${cups.length} 杯` : '还没记录'}</span></button>;
     })}</div></section>
     <div className="grid items-start gap-5 md:grid-cols-[1.5fr_1fr]">
       <section className="paper-panel"><p className="mb-3 font-serif text-[9px] italic tracking-widest text-muted">THIS WEEK’S TEA LOG</p><div className="flex items-center justify-between"><h2 className="text-sm font-medium">{selected ? `${selected.slice(5).replace('-', ' / ')} 的奶茶` : '这周喝的，都在这儿'}</h2>{selected && <button className="text-xs text-muted" onClick={() => setSelected(null)}>查看整周</button>}</div><RecordList records={items.filter(row => !selected || row.date === selected)} date={selected || (dateKey(week) === dateKey(weekStart(new Date())) ? dateKey(new Date()) : dateKey(week))} /></section>
       <section className="paper-panel bg-sky/40"><h2 className="text-sm font-medium">我的口味偏好</h2>{ranked.length ? ranked.map(([category, count], i) => <div key={category} className="mt-5"><div className="mb-2 flex justify-between gap-2 text-xs"><span>{category}</span><span>{count} 杯 · {Math.round(count / items.length * 100)}%</span></div><div className="h-2 overflow-hidden rounded-full bg-ink/5"><div className={['bg-lilac-dark/50', 'bg-sky-dark/70', 'bg-[#dbc887]'][i % 3]} style={{ width: `${count / items.length * 100}%`, height: '100%' }} /></div></div>) : <p className="py-10 text-center text-xs leading-loose text-muted">先喝几杯，<br />再看看自己偏爱哪种。</p>}<p className="mt-7 border-t border-dashed border-line pt-5 text-[11px] leading-loose text-muted">下次点单没主意？<br />来翻翻之前喝过的。</p></section>
     </div>
+    </div>
     {showQuickAdd && !editor && <button className="mobile-quick-add sm:hidden" onClick={() => openEditor()}>＋ 记一杯</button>}
   </>;
 }
 function Stat({ title, note, className, children }) {
-  return <article className={`stat-card ${className}`}><h3 className="text-[10px] text-muted sm:text-xs">{title}</h3><div className="mt-1 min-h-14">{children}</div><p className="mt-1 text-[9px] leading-relaxed text-muted sm:text-[11px]">{note}</p></article>;
+  return <article className={`stat-card ${className}`}><h3 className="text-[10px] text-muted sm:text-xs">{title}</h3><div className="mt-1 min-h-14">{children}</div><p className="stat-note mt-1 text-[9px] leading-relaxed text-muted sm:text-[11px]">{note.replace('等一位选手脱颖而出。', '等一位选手，脱颖而出。').split(/(?<=，)/).map((phrase, i) => <span key={i}>{phrase}</span>)}</p></article>;
 }
