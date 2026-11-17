@@ -3,9 +3,12 @@
 .budget-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
 .budget-heading h2{font-size:14px;letter-spacing:.5px}.budget-heading h2 span{font-size:10px;color:#99816a;margin-left:10px;font-weight:400}
 #budget-count{font-family:Georgia,'Noto Sans SC',serif;font-size:16px;font-weight:400;color:#887196;white-space:nowrap}
-.budget-track{height:14px;background:#eeeadd;border:1px solid #dfd6c3;border-radius:9px;position:relative;overflow:hidden}
-#budget-fill{width:0;height:100%;background:#cbb8dc;border-radius:8px;transition:width .35s ease}
-.budget-tick{position:absolute;top:0;bottom:0;width:2px;background:#fffdf4}.tick-one{left:33.333%}.tick-two{left:66.666%}
+.budget-track{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.budget-cup{display:flex;align-items:center;justify-content:center;gap:12px;padding:12px 8px;background:#f6f2e7;border:1px dashed #ded4c1;border-radius:5px;color:#a08c76;font-size:11px}
+.budget-cup img{width:30px;height:38px;filter:grayscale(1);opacity:.3}
+.budget-cup.is-used{background:#efe5f3;border:1px solid #d1bedb;color:#81638b}
+.budget-cup.is-used img{filter:none;opacity:1}
+@media(max-width:600px){.budget-track{gap:8px}.budget-cup{flex-direction:column;gap:5px;padding:10px 4px;font-size:10px}.budget-cup img{width:28px;height:35px}}
 #budget-note{margin:11px 0 0;font-size:11px;color:#99816a;line-height:1.7}
 .over-budget #budget-fill{background:#d4aaa0}.over-budget #budget-count,.over-budget #budget-note{color:#9c6658}
 @media(max-width:600px){.weekly-budget{padding:16px 13px;margin-bottom:24px}.budget-heading h2{font-size:13px}.budget-heading h2 span{font-size:9px;margin-left:6px}#budget-count{font-size:14px}#budget-note{font-size:10px}}

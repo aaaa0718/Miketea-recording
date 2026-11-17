@@ -3,7 +3,7 @@ const WEEKLY_LIMIT=3;
 function renderBudget(count){
   const remaining=WEEKLY_LIMIT-count;
   $('#budget-count').textContent=`${count} / ${WEEKLY_LIMIT} 杯`;
-  $('#budget-fill').style.width=`${Math.min(count/WEEKLY_LIMIT,1)*100}%`;
+  document.querySelectorAll('.budget-cup').forEach((cup,i)=>cup.classList.toggle('is-used',i<count));
   $('#budget-progress').setAttribute('aria-valuenow',String(Math.min(count,WEEKLY_LIMIT)));
   $('#budget-progress').setAttribute('aria-valuetext',`已喝 ${count} 杯，每周限额 ${WEEKLY_LIMIT} 杯${remaining<0?`，超出 ${-remaining} 杯`:''}`);
   $('.weekly-budget').classList.toggle('over-budget',remaining<0);
