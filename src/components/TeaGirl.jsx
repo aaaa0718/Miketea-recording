@@ -1,4 +1,5 @@
 import { asset } from '../lib/assets.js';
+import { useId } from 'react';
 
 // Transparent puppet layers move independently on a shared continuous timeline.
 function Part({ region, ...props }) {
@@ -8,11 +9,26 @@ function Part({ region, ...props }) {
 }
 
 export default function TeaGirl() {
+  const faceMask = useId();
+  const mouthMask = useId();
+  const feather = useId();
   return <svg className="tea-girl tea-puppet" viewBox="0 0 320 450" role="img" aria-label="女孩缓缓抬杯吸奶茶，放下杯子后开心地眯眼微笑">
+    <defs>
+      <filter id={feather}><feGaussianBlur stdDeviation="1.5" /></filter>
+      <mask id={faceMask} maskUnits="userSpaceOnUse" x="0" y="0" width="320" height="310">
+        <g fill="white" filter={`url(#${feather})`}><ellipse cx="115" cy="199" rx="32" ry="25" /><ellipse cx="209" cy="199" rx="32" ry="25" /></g>
+      </mask>
+      <mask id={mouthMask} maskUnits="userSpaceOnUse" x="0" y="0" width="320" height="310">
+        <ellipse cx="167" cy="233" rx="17" ry="12" fill="white" filter={`url(#${feather})`} />
+      </mask>
+    </defs>
     <Part region="0 627 627 627" x="42" y="247" width="236" height="200" />
     <g className="puppet-head">
-      <g className="puppet-face-open"><Part region="0 0 627 627" x="5" y="0" width="310" height="310" /></g>
-      <g className="puppet-face-happy"><Part region="627 0 627 627" x="5" y="0" width="310" height="310" /></g>
+      <Part region="0 0 627 627" x="5" y="0" width="310" height="310" />
+      <g className="puppet-face-happy">
+        <g mask={`url(#${faceMask})`}><Part region="627 0 627 627" x="5" y="0" width="310" height="310" /></g>
+        <g mask={`url(#${mouthMask})`}><Part region="627 0 627 627" x="5" y="10" width="310" height="310" /></g>
+      </g>
       <g className="puppet-sip-mouth">
         <ellipse cx="168" cy="233" rx="12" ry="7" fill="#fbdac5" />
         <path d="M164 234q4 4 8 0" fill="none" stroke="#8c5d47" strokeWidth="2.5" strokeLinecap="round" />
