@@ -28,7 +28,7 @@ export default function RecordEditor({ record, date }) {
   }
   return <dialog ref={dialog} onCancel={event => { event.preventDefault(); closeEditor(); }} className="record-dialog">
     <form onSubmit={submit}>
-      <div className="flex items-center justify-between gap-4"><h2 className="text-lg font-medium">{record ? '编辑这杯记录' : '今天这杯是？'}</h2><button className="btn-icon" type="button" aria-label="关闭" onClick={closeEditor}>×</button></div>
+      <div className="flex items-center justify-between gap-4"><h2 className="text-lg font-medium">{record ? '编辑这杯记录' : '来，报一下这杯'}</h2><button className="btn-icon" type="button" aria-label="关闭" onClick={closeEditor}>×</button></div>
       <p className="mb-5 mt-1 text-xs text-muted">日期、品类填一下，其他随意。</p>
       <PhotoEditor photo={form.photo} onChange={value => change('photo', value)} onBusy={setBusy} />
       <div className="mt-5 grid grid-cols-2 gap-4">
@@ -39,10 +39,10 @@ export default function RecordEditor({ record, date }) {
         <label className="field">饮品名<input name="name" maxLength={60} value={form.name} onChange={event => change('name', event.target.value)} placeholder="这杯叫什么名字？" /></label>
         <label className="field">甜度<select name="sugar" value={form.sugar} onChange={event => change('sugar', event.target.value)}>{[...new Set([...SUGARS, form.sugar])].map(s => <option key={s}>{s}</option>)}</select></label>
         <label className="field">冰量<select name="ice" value={form.ice} onChange={event => change('ice', event.target.value)}>{[...new Set([...ICES, form.ice])].map(s => <option key={s}>{s}</option>)}</select></label>
-        <label className="field col-span-2">备注<textarea name="note" rows={3} maxLength={200} value={form.note} onChange={event => change('note', event.target.value)} placeholder="夸两句，或者吐槽一下。" /></label>
+        <label className="field col-span-2">备注<textarea name="note" rows={3} maxLength={200} value={form.note} onChange={event => change('note', event.target.value)} placeholder="好喝吗？值得 AA 再点一次吗？" /></label>
       </div>
       {error && <p className="mt-4 rounded-md bg-rose-50 p-3 text-sm text-rose-900" role="alert">{error}</p>}
-      <div className="mt-6 flex justify-between gap-4">{record ? <button type="button" className="text-xs text-rose-800" onClick={deleteRecord} disabled={busy}>删除这杯</button> : <span />}<button type="submit" className="btn-primary" disabled={busy}>{busy ? '贴纸处理中…' : '保存记录'}</button></div>
+      <div className="mt-6 flex justify-between gap-4">{record ? <button type="button" className="text-xs text-rose-800" onClick={deleteRecord} disabled={busy}>删除这杯</button> : <span />}<button type="submit" className="btn-primary" disabled={busy}>{busy ? '贴纸处理中…' : '记上了'}</button></div>
     </form>
   </dialog>;
 }

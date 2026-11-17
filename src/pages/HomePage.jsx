@@ -29,12 +29,12 @@ export default function HomePage() {
       <HeroArt />
     </section>
     <div className="grid-paper mb-8 hidden sm:flex items-center justify-center gap-4 border-y border-line py-3 font-serif text-[9px] tracking-wider text-muted sm:gap-7 sm:text-xs"><span>ONE CUP, ONE STORY</span><img className="h-7 w-5 -rotate-12" src={asset('cup.svg')} alt="" /><span className="text-[9px]">喝过的，记一下</span></div>
-    <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h2 className="text-lg font-medium">这周，喝了这些</h2><p className="mt-2 text-[11px] text-muted">{week.getFullYear()} 年 {shortDate(week)} — {shortDate(end)}</p></div><div className="flex gap-1"><button className="btn-icon" aria-label="上一周" onClick={() => changeWeek(offsetDay(week, -7))}>←</button><button className="btn-small" onClick={() => changeWeek(weekStart(new Date()))}>回到本周</button><button className="btn-icon" aria-label="下一周" onClick={() => changeWeek(offsetDay(week, 7))}>→</button></div></div>
+    <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h2 className="text-lg font-medium">本周喝到哪了</h2><p className="mt-2 text-[11px] text-muted">{week.getFullYear()} 年 {shortDate(week)} — {shortDate(end)}</p></div><div className="flex gap-1"><button className="btn-icon" aria-label="上一周" onClick={() => changeWeek(offsetDay(week, -7))}>←</button><button className="btn-small" onClick={() => changeWeek(weekStart(new Date()))}>回到本周</button><button className="btn-icon" aria-label="下一周" onClick={() => changeWeek(offsetDay(week, 7))}>→</button></div></div>
     <WeeklyBudget count={items.length} />
     <section className="mb-7 grid grid-cols-3 gap-2.5 sm:gap-5" aria-label="本周统计">
-      <Stat title="本周喝了" className="-rotate-[.7deg] bg-butter" note="一杯一笔，都在这里。"><span className="stat-number">{items.length}</span><span className="ml-2 text-xs">杯</span></Stat>
-      <Stat title="解锁品类" className="rotate-[.5deg] bg-sky" note="换个口味，也算探索。"><span className="stat-number">{ranked.length}</span><span className="ml-2 text-xs">种</span></Stat>
-      <Stat title="又点了它" className="-rotate-[.5deg] bg-lilac" note={ranked.length ? '菜单那么长，最后还是你。' : '等喝过，再选最爱。'}><span className="block truncate py-3 text-sm text-lilac-dark sm:text-xl">{ranked[0]?.[0] || '暂时还没偏心谁'}</span></Stat>
+      <Stat title="喝了几杯" className="-rotate-[.7deg] bg-butter" note="有据可查，不能装没喝。"><span className="stat-number">{items.length}</span><span className="ml-2 text-xs">杯</span></Stat>
+      <Stat title="换了几种" className="rotate-[.5deg] bg-sky" note="奶茶口味，雨露均沾。"><span className="stat-number">{ranked.length}</span><span className="ml-2 text-xs">种</span></Stat>
+      <Stat title="最常翻牌" className="-rotate-[.5deg] bg-lilac" note={ranked.length ? `选了它 ${ranked[0][1]} 次，偏心实锤。` : '等一位选手脱颖而出。'}><span className="block truncate py-3 text-sm text-lilac-dark sm:text-xl">{ranked[0]?.[0] || 'C 位空缺'}</span></Stat>
     </section>
     <section className="paper-panel mb-6"><div className="flex items-center justify-between"><h2 className="text-sm font-medium">一周打卡</h2><Link to="/calendar" className="text-[11px] text-muted underline-offset-4 hover:underline">查看贴纸月历 →</Link></div><div className="mt-5 grid grid-cols-7 gap-1 sm:gap-3">{Array.from({ length: 7 }, (_, i) => {
       const date = offsetDay(week, i), key = dateKey(date), cups = items.filter(row => row.date === key);
