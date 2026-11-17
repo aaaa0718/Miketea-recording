@@ -1,6 +1,8 @@
 /* Paper, pastel postcards and brown-ink illustrations. */
-.empty-icon img{transform-origin:50% 85%;animation:empty-cup-dance 3.6s ease-in-out infinite}
-@keyframes empty-cup-dance{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-6px) rotate(6deg)}}
+.empty-icon img{transform-origin:50% 85%;animation:empty-cup-dance 2.6s ease-in-out infinite}
+@keyframes empty-cup-dance{0%,100%{transform:translateY(0) rotate(-10deg)}50%{transform:translateY(-10px) rotate(10deg)}}
+.cup-motion{display:block;margin:0 auto 12px;padding:15px 20px 8px;color:#99816a}
+.cup-motion-label{display:block;margin-top:9px;font-size:10px;letter-spacing:1px;color:#99816a}
 .motion-paused .empty-icon img{animation-play-state:paused}
 @media(prefers-reduced-motion:reduce){html:not(.motion-enabled) .empty-icon img{animation:none}}
 #motion-toggle{position:absolute;bottom:32px;left:10px;z-index:3;background:#fffdf4dd;border:1px solid #d5c7b4;border-radius:4px;padding:8px 10px;min-height:34px;font-size:10px;color:#796049}
