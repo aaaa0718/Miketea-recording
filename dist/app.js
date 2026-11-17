@@ -1,7 +1,7 @@
 const KEY='tea-diary-v1', $=s=>document.querySelector(s), baseCategories=['鲜奶茶','传统奶茶','果茶','纯茶','其他'];
 const illustration=document.querySelector('svg.hero-illustration'),motionButton=document.querySelector('#motion-toggle');
 let motionPlaying=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-function updateMotion(){illustration.classList.toggle('motion-enabled',motionPlaying);illustration.classList.toggle('motion-paused',!motionPlaying);motionButton.textContent=motionPlaying?'暂停动画':'播放动画';motionButton.setAttribute('aria-label',motionPlaying?'暂停奶茶动画':'播放奶茶动画');}
+function updateMotion(){document.documentElement.classList.toggle("motion-enabled",motionPlaying);document.documentElement.classList.toggle("motion-paused",!motionPlaying);illustration.classList.toggle('motion-enabled',motionPlaying);illustration.classList.toggle('motion-paused',!motionPlaying);motionButton.textContent=motionPlaying?'暂停动画':'播放动画';motionButton.setAttribute('aria-label',motionPlaying?'暂停奶茶动画':'播放奶茶动画');}
 motionButton.onclick=()=>{motionPlaying=!motionPlaying;updateMotion()};updateMotion();
 const dateKey=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 const parseDate=s=>new Date(s+'T12:00:00');
