@@ -12,6 +12,10 @@
 
 ## 本地运行
 
+在线访问：https://aaaa0718.github.io/Miketea-recording/
+
+GitHub Actions 会在每次推送到 `main` 后自动将 `dist` 目录部署到 GitHub Pages。可在仓库 Actions 页面查看部署进度。
+
 无需安装依赖或构建。在项目目录运行：
 
 ```sh
