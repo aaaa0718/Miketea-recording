@@ -7,7 +7,7 @@ export default function HeroArt() {
       <path d="m25 27 5 6m-8 19 8-4m15 14-2-8m20-19-8 3" stroke="#d5c38f" strokeWidth="1.3" strokeLinecap="round" />
       <path d="M48 35c6 12-8 19-14 10-8-10 6-20 14-10Z" fill="#d9c8e3" stroke="#b39bc0" strokeWidth="1.4" />
     </svg>
-    <span className="art-label">AA’s tea break</span>
+    <span className="art-label">AA’s Tea Break</span>
     <TeaGirl />
   </div>;
 }
