@@ -70,20 +70,22 @@
 @keyframes empty-cup { 0%,100% { transform: translateY(0) rotate(-10deg); } 50% { transform: translateY(-10px) rotate(10deg); } }
 .hero-layout { row-gap: 20px; }
 .hero-copy { grid-column: 1; grid-row: 1; align-self: end; }
+.hero-doodle { display: none; pointer-events: none; }
 .hero-add { grid-column: 1; grid-row: 2; justify-self: start; align-self: start; }
 .hero-layout > .hero-art { grid-column: 2; grid-row: 1 / span 2; }
 .mobile-quick-add { position: fixed; right: 18px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 30; min-height: 48px; padding: 12px 20px; border-radius: 999px; background: #80648e; color: white; font-size: 14px; font-weight: 600; box-shadow: 0 4px 18px #69554030; border: 1px solid #fff9; }
 @media(max-width: 639px) {
-  .hero-layout { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 18px 10px; padding: 24px 0; }
-  .hero-copy { align-self: center; }
-  .hero-copy h1 { font-size: clamp(21px, 5.8vw, 28px); line-height: 1.65; letter-spacing: 0; }
+  .hero-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px 8px; padding: 20px 0; }
+  .hero-copy { position: relative; align-self: center; min-width: 0; }
+  .hero-copy h1 { font-size: clamp(24px, 6.8vw, 32px); font-weight: 600; line-height: 1.55; letter-spacing: 0; white-space: nowrap; }
+  .hero-doodle { display: block; position: absolute; width: clamp(86px, 27vw, 118px); height: auto; right: -18px; bottom: -40px; z-index: 2; }
   .hero-eyebrow { display: none; }
-  .hero-description { margin-top: 8px; font-size: 10px; line-height: 1.7; }
-  .hero-layout > .hero-art { grid-row: 1; width: 100%; padding: 12px 3px 6px; border-width: 4px; }
+  .hero-description { margin-top: 8px; font-size: 12px; line-height: 1.7; }
+  .hero-layout > .hero-art { grid-row: 1; width: 100%; max-width: 175px; justify-self: start; padding: 9px 3px 5px; border-width: 4px; }
   .hero-art::before { width: 42px; height: 16px; top: -10px; left: 35%; }
   .hero-art .art-label, .hero-art .art-caption, .hero-art .hero-note { display: none; }
   .hero-illustration { aspect-ratio: 1; }
-  .tea-girl { width: 100%; margin: 2px auto; }
+  .tea-girl { width: 88%; margin: 2px auto; }
   .hero-add { grid-column: 1 / -1; width: 100%; min-height: 50px; background: #80648e; color: #fff; font-size: 16px; font-weight: 600; box-shadow: 0 4px 0 #c9bbd180; }
   .hero-add:hover, .mobile-quick-add:hover { background: #70557e; }
   main { padding-bottom: 80px; }
