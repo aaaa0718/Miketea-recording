@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import HeroArt from '../components/HeroArt.jsx';
 import WeeklyBudget from '../components/WeeklyBudget.jsx';
@@ -9,16 +9,26 @@ import { inWeek, rankRecords } from '../lib/records.js';
 import { asset, photoSrc } from '../lib/assets.js';
 
 export default function HomePage() {
-  const { records, openEditor } = useDiary();
+  const { records, openEditor, editor } = useDiary();
   const [week, setWeek] = useState(() => weekStart(new Date())), [selected, setSelected] = useState(null);
+  const primaryButton = useRef(null);
+  const [showQuickAdd, setShowQuickAdd] = useState(false);
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      setShowQuickAdd(!entry.isIntersecting && entry.boundingClientRect.bottom < 0);
+    });
+    observer.observe(primaryButton.current);
+    return () => observer.disconnect();
+  }, []);
   const items = inWeek(records, week), ranked = rankRecords(items), end = offsetDay(week, 6);
   const changeWeek = date => { setWeek(date); setSelected(null); };
   return <>
     <section className="hero-layout">
-      <div><p className="mb-4 font-serif text-[9px] tracking-[.22em] text-muted">A LITTLE SIP OF HAPPINESS</p><h1 className="text-[30px] font-medium leading-relaxed tracking-wider sm:text-[38px]">又喝奶茶了？<br />记上！记上！</h1><p className="mb-6 mt-4 text-xs text-muted">杯子可以扔，这杯得留名。</p><button className="btn-primary" onClick={() => openEditor()}>＋ 记一杯</button></div>
+      <div className="hero-copy"><p className="hero-eyebrow mb-4 font-serif text-[9px] tracking-[.22em] text-muted">A LITTLE SIP OF HAPPINESS</p><h1 className="text-[30px] font-medium leading-relaxed tracking-wider sm:text-[38px]">又喝奶茶了？<br />记上！记上！</h1><p className="hero-description mt-4 text-xs text-muted">杯子可以扔，这杯得留名。</p></div>
+      <button ref={primaryButton} className="btn-primary hero-add" onClick={() => openEditor()}>＋ 记一杯</button>
       <HeroArt />
     </section>
-    <div className="grid-paper mb-8 flex items-center justify-center gap-4 border-y border-line py-3 font-serif text-[9px] tracking-wider text-muted sm:gap-7 sm:text-xs"><span>A LITTLE TEA, A LOT OF JOY</span><img className="h-7 w-5 -rotate-12" src={asset('cup.svg')} alt="" /><span className="text-[9px]">慢慢喝 · 慢慢记</span></div>
+    <div className="grid-paper mb-8 hidden sm:flex items-center justify-center gap-4 border-y border-line py-3 font-serif text-[9px] tracking-wider text-muted sm:gap-7 sm:text-xs"><span>A LITTLE TEA, A LOT OF JOY</span><img className="h-7 w-5 -rotate-12" src={asset('cup.svg')} alt="" /><span className="text-[9px]">慢慢喝 · 慢慢记</span></div>
     <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h2 className="text-lg font-medium">这一周的小快乐</h2><p className="mt-2 text-[11px] text-muted">{week.getFullYear()} 年 {shortDate(week)} — {shortDate(end)}</p></div><div className="flex gap-1"><button className="btn-icon" aria-label="上一周" onClick={() => changeWeek(offsetDay(week, -7))}>←</button><button className="btn-small" onClick={() => changeWeek(weekStart(new Date()))}>回到本周</button><button className="btn-icon" aria-label="下一周" onClick={() => changeWeek(offsetDay(week, 7))}>→</button></div></div>
     <WeeklyBudget count={items.length} />
     <section className="mb-7 grid grid-cols-3 gap-2.5 sm:gap-5" aria-label="本周统计">
@@ -34,6 +44,7 @@ export default function HomePage() {
       <section className="paper-panel"><p className="mb-3 font-serif text-[9px] italic tracking-widest text-muted">THE LITTLE JOY LIST</p><div className="flex items-center justify-between"><h2 className="text-sm font-medium">{selected ? `${selected.slice(5).replace('-', ' / ')} 的奶茶` : '本周的奶茶清单'}</h2>{selected && <button className="text-xs text-muted" onClick={() => setSelected(null)}>查看整周</button>}</div><RecordList records={items.filter(row => !selected || row.date === selected)} date={selected || (dateKey(week) === dateKey(weekStart(new Date())) ? dateKey(new Date()) : dateKey(week))} /></section>
       <section className="paper-panel bg-sky/40"><h2 className="text-sm font-medium">我的口味地图</h2>{ranked.length ? ranked.map(([category, count], i) => <div key={category} className="mt-5"><div className="mb-2 flex justify-between gap-2 text-xs"><span>{category}</span><span>{count} 杯 · {Math.round(count / items.length * 100)}%</span></div><div className="h-2 overflow-hidden rounded-full bg-ink/5"><div className={['bg-lilac-dark/50', 'bg-sky-dark/70', 'bg-[#dbc887]'][i % 3]} style={{ width: `${count / items.length * 100}%`, height: '100%' }} /></div></div>) : <p className="py-10 text-center text-xs leading-loose text-muted">喝过的每一种味道<br />都会在这里留下印记</p>}<p className="mt-7 border-t border-dashed border-line pt-5 text-[11px] leading-loose text-muted">不赶时间，慢慢喝。<br />快乐可以是很小的一件事。</p></section>
     </div>
+    {showQuickAdd && !editor && <button className="mobile-quick-add sm:hidden" onClick={() => openEditor()}>＋ 记一杯</button>}
   </>;
 }
 function Stat({ title, note, className, children }) {
