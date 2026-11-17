@@ -1,3 +1,4 @@
+import Sparkles from './Sparkles.jsx';
 import TeaGirl from './TeaGirl.jsx';
 
 export default function HeroArt() {
@@ -9,5 +10,6 @@ export default function HeroArt() {
     </svg>
     <span className="art-label">AA’s Tea Break</span>
     <TeaGirl />
+    <Sparkles variant="portrait" />
   </div>;
 }

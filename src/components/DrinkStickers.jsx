@@ -1,5 +1,7 @@
+import Sparkles from './Sparkles.jsx';
 export default function DrinkStickers() {
   return <div className="drink-stickers" aria-hidden="true">
+    <Sparkles variant="drinks" />
     <svg viewBox="0 0 70 80" className="drink-latte"><g stroke="#92765e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M48 30c24-7 23 27 1 23" fill="#f8efd9" />
       <path d="M10 27h42l-3 31c-4 15-31 16-36-1Z" fill="#f6e6b8" />

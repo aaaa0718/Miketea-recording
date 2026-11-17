@@ -132,11 +132,11 @@
 @media (prefers-reduced-motion: reduce) { .aa-reaction canvas, .aa-reaction--saved, .aa-saved-notice { animation: none; } }
 
 .drink-stickers { position: absolute; right: 5px; top: -30px; width: 65px; height: 245px; display: flex; flex-direction: column; justify-content: space-between; pointer-events: none; }
-.drink-stickers svg { width: 58px; height: 70px; overflow: visible; filter: drop-shadow(2px 3px 0 #fffdf2); }
+.drink-stickers > svg { width: 58px; height: 70px; overflow: visible; filter: drop-shadow(2px 3px 0 #fffdf2); }
 .drink-latte { transform: rotate(-12deg); }
 .drink-americano { transform: translateX(12px) rotate(10deg); }
 .drink-milk-tea { transform: rotate(-7deg); }
-.drink-stickers svg { animation: drink-bob 4.8s ease-in-out infinite; transform-origin: 50% 75%; }
+.drink-stickers > svg { animation: drink-bob 4.8s ease-in-out infinite; transform-origin: 50% 75%; }
 .drink-stickers .drink-americano { animation-duration: 5.6s; animation-delay: -1.8s; }
 .drink-stickers .drink-milk-tea { animation-duration: 4.4s; animation-delay: -2.9s; }
 /* Individual transforms preserve each sticker's responsive placement. */
@@ -144,13 +144,34 @@
   0%, 100% { translate: 0 0; rotate: -3deg; }
   50% { translate: 0 -5px; rotate: 3deg; }
 }
-@media (prefers-reduced-motion: reduce) { .drink-stickers svg { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .drink-stickers > svg { animation: none; } }
 @media(max-width: 639px) {
  .hero-copy h1 { font-size: clamp(22px, 6.5vw, 32px); }
  .drink-stickers { width: 40px; height: 190px; right: -8px; top: -50px; z-index: 3; }
- .drink-stickers svg { width: 38px; height: 49px; }
+ .drink-stickers > svg { width: 38px; height: 49px; }
  .drink-latte { transform: translateX(-29px) rotate(-15deg); }
  .drink-americano { transform: translateX(3px) rotate(12deg); }
  .drink-milk-tea { transform: translateX(-25px) rotate(-10deg); }
  .hero-doodle { right: -9px; bottom: -31px; transform: rotate(-12deg); }
 }
+
+.hero-sparkles { position: absolute; inset: 0; pointer-events: none; }
+.sparkle { position: absolute; width: 22px; height: 22px; fill: #f2e4a9; stroke: #c8ae76; animation: star-glimmer 3.8s ease-in-out infinite; transform-origin: center; }
+.sparkle-1 { width: 16px; height: 16px; fill: #dfcfe9; stroke: #b59ac5; animation-delay: -1.3s; animation-duration: 4.4s; }
+.sparkle-2 { width: 12px; height: 12px; animation-delay: -2.7s; }
+.hero-sparkles--drinks .sparkle-0 { left: -24px; top: 12%; }
+.hero-sparkles--drinks .sparkle-1 { right: -19px; top: 43%; }
+.hero-sparkles--drinks .sparkle-2 { left: -14px; top: 72%; }
+.hero-sparkles--portrait .sparkle-0 { left: 7%; top: 30%; }
+.hero-sparkles--portrait .sparkle-1 { right: 5%; top: 49%; }
+.hero-sparkles--portrait .sparkle-2 { left: 10%; bottom: 14%; }
+@keyframes star-glimmer { 0%, 100% { opacity: .4; transform: scale(.8) rotate(-8deg); } 50% { opacity: 1; transform: scale(1.12) rotate(8deg); } }
+@media(max-width: 639px) {
+ .sparkle { width: 15px; height: 15px; }
+ .sparkle-1 { width: 12px; height: 12px; }
+ .sparkle-2 { width: 9px; height: 9px; }
+ .hero-sparkles--drinks .sparkle-0 { left: -3px; top: 8%; }
+ .hero-sparkles--drinks .sparkle-1 { right: -8px; top: 35%; }
+ .hero-sparkles--drinks .sparkle-2 { left: -38px; top: 80%; }
+}
+@media(prefers-reduced-motion: reduce) { .sparkle { animation: none; opacity: .8; } }
