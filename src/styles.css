@@ -136,6 +136,15 @@
 .drink-latte { transform: rotate(-12deg); }
 .drink-americano { transform: translateX(12px) rotate(10deg); }
 .drink-milk-tea { transform: rotate(-7deg); }
+.drink-stickers svg { animation: drink-bob 4.8s ease-in-out infinite; transform-origin: 50% 75%; }
+.drink-stickers .drink-americano { animation-duration: 5.6s; animation-delay: -1.8s; }
+.drink-stickers .drink-milk-tea { animation-duration: 4.4s; animation-delay: -2.9s; }
+/* Individual transforms preserve each sticker's responsive placement. */
+@keyframes drink-bob {
+  0%, 100% { translate: 0 0; rotate: -3deg; }
+  50% { translate: 0 -5px; rotate: 3deg; }
+}
+@media (prefers-reduced-motion: reduce) { .drink-stickers svg { animation: none; } }
 @media(max-width: 639px) {
  .hero-copy h1 { font-size: clamp(22px, 6.5vw, 32px); }
  .drink-stickers { width: 40px; height: 190px; right: -8px; top: -50px; z-index: 3; }
