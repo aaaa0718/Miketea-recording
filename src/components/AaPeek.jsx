@@ -1,13 +1,13 @@
 import { useEffect, useRef } from 'react';
-import { asset } from '../lib/assets.js';
+import girlSource from '../assets/opening-girl.json';
 
-export default function AaPeek({ intro = false, onDone }) {
+export default function AaPeek({ intro = false, onDone, onReady }) {
   const ref = useRef(null);
   useEffect(() => {
     const canvas = ref.current, ctx = canvas.getContext('2d'), image = new Image();
     let frame, stopped = false, start;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const fallback = intro ? setTimeout(() => onDone?.(), 3200) : null;
+    let fallback = intro ? setTimeout(() => onDone?.(), 3200) : null;
     function paint(elapsed) {
       const w = image.naturalWidth, h = image.naturalHeight;
       ctx.setTransform(2, 0, 0, 2, 0, 0); ctx.clearRect(0, 0, 400, 560);
@@ -25,7 +25,11 @@ export default function AaPeek({ intro = false, onDone }) {
     }
     image.onload = () => {
       if (stopped) return;
-      if (!intro) { paint(0); return; }
+      clearTimeout(fallback);
+      paint(0);
+      onReady?.();
+      if (!intro) return;
+      fallback = setTimeout(() => onDone?.(), 3200);
       function tick(now) {
         if (stopped) return;
         start ??= now; const elapsed = now - start; paint(elapsed);
@@ -35,8 +39,8 @@ export default function AaPeek({ intro = false, onDone }) {
       frame = requestAnimationFrame(tick);
     };
     image.onerror = () => { if (!stopped && intro) onDone?.(); };
-    image.src = asset('aa-peek-atlas.webp');
+    image.src = girlSource;
     return () => { stopped = true; cancelAnimationFrame(frame); clearTimeout(fallback); };
-  }, [intro, onDone]);
+  }, [intro, onDone, onReady]);
   return <canvas ref={ref} width="800" height={intro ? 1120 : 960} className={intro ? 'aa-intro-canvas' : 'aa-calendar-peek'} aria-hidden="true" />;
 }
