@@ -3,6 +3,8 @@ import { useDiary } from '../state/DiaryContext.jsx';
 import { dateKey, parseDate, isDate, monthStart, offsetMonth, monthPrefix, monthCells, shortDate } from '../lib/dates.js';
 import { inMonth, rankRecords } from '../lib/records.js';
 import { photoSrc, asset } from '../lib/assets.js';
+import AaPeek from '../components/AaPeek.jsx';
+import CupPhoto from '../components/CupPhoto.jsx';
 
 export default function CalendarPage() {
   const { records, openEditor } = useDiary();
@@ -18,14 +20,15 @@ export default function CalendarPage() {
   const changeMonth = date => setParams({ month: monthPrefix(date) });
   return <section className="py-7 sm:py-10">
     <div className="mb-6 flex items-end justify-between gap-3"><div><h1 className="text-xl font-medium">AA的杯杯月历</h1><p className="mt-2 text-xs text-muted">一杯一张，慢慢贴满。</p></div><button className="btn-primary text-xs" onClick={() => openEditor(null, selectedDate || dateKey(new Date()))}>＋ 记一杯</button></div>
-    <div className="rounded-[22px] border border-sky-dark/30 bg-sky/65 p-3.5 sm:p-7">
+    <div className="calendar-paper rounded-[22px] border border-sky-dark/30 bg-sky/65 p-3.5 sm:p-7">
+      <div className="calendar-companion"><AaPeek /></div>
       <div className="mb-6 flex flex-wrap items-center justify-between gap-2"><div><h2 className="font-serif text-3xl font-semibold tracking-wide sm:text-4xl">{month.toLocaleString('en-US', { month: 'long' })}</h2><p className="mt-1 text-[11px] tracking-widest text-muted">{month.getFullYear()} · AA的杯杯月历</p></div><div className="flex gap-1"><button className="btn-icon" aria-label="上一月" onClick={() => changeMonth(offsetMonth(month, -1))}>←</button><button className="btn-small" onClick={() => changeMonth(monthStart(new Date()))}>本月</button><button className="btn-icon" aria-label="下一月" onClick={() => changeMonth(offsetMonth(month, 1))}>→</button></div></div>
       <div className="grid grid-cols-7 gap-1.5 sm:gap-3">{'一二三四五六日'.split('').map(day => <span key={day} className="pb-1 text-center text-[10px] text-muted sm:text-xs">{day}</span>)}{days.map((day, i) => {
         if (!day) return <span key={`blank-${i}`} />;
         const cups = items.filter(row => row.date === day);
         return <button key={day} onClick={() => setParams({ month: prefix, day })} aria-label={`${shortDate(parseDate(day))}，${cups.length}杯`} aria-pressed={day === selectedDate} className={`month-day ${day === selectedDate ? 'border-lilac-dark bg-lilac/65' : day === dateKey(new Date()) ? 'border-2 border-lilac-dark/70 bg-paper/75' : 'border-sky-dark/30 bg-paper/65'}`}>
           <span className={cups.length ? 'absolute left-1 top-1 z-10 font-serif text-[9px] text-muted sm:left-2 sm:text-xs' : 'font-serif text-xs text-muted sm:text-base'}>{parseDate(day).getDate()}</span>
-          {cups.length > 0 && <img className={`sticker absolute bottom-[5%] left-[10%] h-[78%] w-[80%] object-contain ${i % 3 ? '-rotate-6' : 'rotate-6'}`} src={photoSrc(cups.at(-1))} alt="" />}
+          {cups.length > 0 && <CupPhoto className={`sticker calendar-cup ${i % 3 ? '-rotate-3' : 'rotate-3'}`} src={photoSrc(cups.at(-1))} alt="" />}
           {cups.length > 1 && <span className="absolute -right-1 -top-1 z-20 grid h-5 min-w-5 place-items-center rounded-full border-2 border-sky bg-lilac-dark px-1 text-[9px] text-white">{cups.length}</span>}
         </button>;
       })}</div>

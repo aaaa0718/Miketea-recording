@@ -9,6 +9,10 @@ export function validRecord(record) {
   return !!record && typeof record.id === 'string' && record.id.length > 0 && isDate(record.date)
     && typeof record.category === 'string' && record.category.trim().length > 0 && record.category.length <= 20
     && ['name', 'brand', 'sugar', 'ice', 'note'].every(key => typeof record[key] === 'string' && record[key].length <= 200)
+    && (record.size === undefined || (typeof record.size === 'string' && record.size.length <= 20))
+    && (record.toppings === undefined || (Array.isArray(record.toppings) && record.toppings.length <= 12 && record.toppings.every(v => typeof v === 'string' && v.length > 0 && v.length <= 30)))
+    && (record.price === undefined || record.price === null || (typeof record.price === 'number' && Number.isFinite(record.price) && record.price >= 0 && record.price <= 99999))
+    && (record.rating === undefined || record.rating === null || (Number.isInteger(record.rating) && record.rating >= 1 && record.rating <= 5))
     && (record.photo === undefined || record.photo === '' || (typeof record.photo === 'string' && record.photo.length <= 400000 && /^data:image\/(?:webp|png|jpeg);base64,[A-Za-z0-9+/=]+$/.test(record.photo)));
 }
 export function decodeRecords(raw) {
@@ -45,6 +49,9 @@ export function rankRecords(records, key = record => record.category) {
   return [...counts].sort((a, b) => b[1] - a[1]);
 }
 export const newestFirst = (records) => [...records].sort((a, b) => b.date.localeCompare(a.date));
+export function recordDetails(record) {
+  return [record.size, ...(record.toppings || []), record.price != null ? `¥${record.price.toFixed(2)}` : '', record.rating ? `${'♥'.repeat(record.rating)} ${record.rating}/5` : ''].filter(Boolean).join(' · ');
+}
 export function budgetText(count) {
   if (count === 0) return '3 个名额，谁先上？';
   if (count === 1) return '还剩 2 杯，选妃继续。';

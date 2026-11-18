@@ -1,4 +1,5 @@
 import DrinkStickers from '../components/DrinkStickers.jsx';
+import CupPhoto from '../components/CupPhoto.jsx';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import HeroArt from '../components/HeroArt.jsx';
@@ -41,7 +42,7 @@ export default function HomePage() {
     </section>
     <section className="paper-panel mb-6"><div className="flex items-center justify-between"><h2 className="text-sm font-medium">一周打卡</h2><Link to={`/calendar?month=${entryDate.slice(0, 7)}${selected ? `&day=${selected}` : ''}`} className="text-[11px] text-muted underline-offset-4 hover:underline">查看杯杯月历 →</Link></div><div className="mt-5 grid grid-cols-7 gap-1 sm:gap-3">{Array.from({ length: 7 }, (_, i) => {
       const date = offsetDay(week, i), key = dateKey(date), cups = items.filter(row => row.date === key);
-      return <button key={key} className={`week-day ${selected === key ? 'border-lilac-dark bg-lilac/40' : key === dateKey(new Date()) ? 'border-sky-dark bg-sky/50' : 'border-line bg-cream'}`} aria-label={`${shortDate(date)}，${cups.length}杯`} aria-pressed={selected === key} onClick={() => setSelected(selected === key ? null : key)}><span className="text-[9px] text-muted">周{'一二三四五六日'[i]}</span><span className="my-2 font-serif text-base">{date.getDate()}</span><img className={`mb-2 h-8 w-7 object-contain ${cups.length ? '' : 'opacity-30'}`} src={photoSrc(cups.at(-1))} alt="" /><span className="week-status text-[8px] text-muted">{cups.length ? `${cups.length} 杯` : '还没记录'}</span></button>;
+      return <button key={key} className={`week-day ${selected === key ? 'border-lilac-dark bg-lilac/40' : key === dateKey(new Date()) ? 'border-sky-dark bg-sky/50' : 'border-line bg-cream'}`} aria-label={`${shortDate(date)}，${cups.length}杯`} aria-pressed={selected === key} onClick={() => setSelected(selected === key ? null : key)}><span className="text-[9px] text-muted">周{'一二三四五六日'[i]}</span><span className="my-2 font-serif text-base">{date.getDate()}</span><CupPhoto className={`week-cup ${cups.length ? 'sticker' : 'opacity-30'}`} src={photoSrc(cups.at(-1))} alt="" /><span className="week-status text-[8px] text-muted">{cups.length ? `${cups.length} 杯` : '还没记录'}</span></button>;
     })}</div></section>
     <div className="grid items-start gap-5 md:grid-cols-[1.5fr_1fr]">
       <section className="paper-panel"><p className="mb-3 font-serif text-[9px] italic tracking-widest text-muted">THIS WEEK’S CUP LOG</p><div className="flex items-center justify-between"><h2 className="text-sm font-medium">{selected ? `${selected.slice(5).replace('-', ' / ')} 的饮品` : '这周喝的，都在这儿'}</h2>{selected && <button className="text-xs text-muted" onClick={() => setSelected(null)}>查看整周</button>}</div><RecordList records={items.filter(row => !selected || row.date === selected)} date={entryDate} /></section>
