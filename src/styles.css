@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+.record-form { display:flex; flex-direction:column; max-height:calc(90dvh - 2px); }
+.record-form-header { flex:none; padding:20px 20px 16px; border-bottom:1px solid #e1d7c3; }
+.record-form-body { min-height:0; overflow-y:auto; overscroll-behavior:contain; padding:20px; scroll-padding-block:16px; }
+.record-form-footer { flex:none; display:grid; gap:10px; padding:14px 20px max(14px, env(safe-area-inset-bottom)); border-top:1px solid #e1d7c3; background:#fffdf3; box-shadow:0 -4px 16px #6955400a; }
+.record-form-footer .record-save { flex:1; min-height:46px; font-size:15px; }
+.record-save:disabled { opacity:.5; cursor:not-allowed; box-shadow:none; }
+@media(min-width:640px) { .record-form-header { padding:24px 28px 16px; } .record-form-body { padding:20px 28px; } .record-form-footer { padding-inline:28px; } }
+
 .drink-stamp-item { min-width:0; }
 .drink-stamp-item > .drink-stamp { width:100%; }
 .composed-stamp-art { display:block; width:100%; height:100%; }
@@ -91,13 +99,13 @@
   .stat-card { @apply relative min-w-0 rounded-sm border border-ink/5 px-3 py-5 shadow-[3px_5px_0_#8f775108] sm:px-6; }
   .stat-card::before { content: ''; @apply absolute -top-2 left-1/2 -translate-x-1/2 h-4 w-11 -rotate-3 bg-paper/55; }
   .stat-number { @apply font-serif text-[39px] font-normal italic leading-tight sm:text-5xl; }
-  .week-day { @apply flex min-w-0 flex-col items-center rounded-t-full rounded-b-sm border px-0.5 py-3 transition-colors sm:py-4; }
+  .week-day { @apply flex min-w-0 flex-col items-center rounded-lg border border-transparent px-0.5 py-2 transition-colors; }
   .month-day { @apply relative grid aspect-[.78] min-w-0 place-items-center rounded-lg border p-1 transition-colors hover:bg-paper sm:aspect-square sm:rounded-xl; }
   .field { @apply flex min-w-0 flex-col gap-2 text-xs; }
   .field input, .field select, .field textarea { @apply w-full rounded border border-line bg-paper p-2.5 text-base text-ink sm:text-sm; }
   .field input[type="date"] { appearance: none; -webkit-appearance: none; display: block; box-sizing: border-box; min-width: 0; max-width: 100%; }
   .field input[type="date"]::-webkit-date-and-time-value { text-align: left; min-height: 1.5em; }
-  .record-dialog { @apply fixed inset-0 m-auto max-h-[90dvh] w-[calc(100%_-_28px)] max-w-[540px] overflow-y-auto rounded-xl border border-line bg-paper p-5 text-ink shadow-2xl sm:p-7; }
+  .record-dialog { @apply fixed inset-0 m-auto max-h-[90dvh] w-[calc(100%_-_28px)] max-w-[540px] overflow-hidden rounded-xl border border-line bg-paper p-0 text-ink shadow-2xl; }
   .record-dialog::backdrop { background: #45372c66; backdrop-filter: blur(4px); }
 }
 
@@ -105,7 +113,7 @@
 .brand-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
 .brand-choice { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; min-height: 92px; padding: 10px 3px; border: 1px solid #e1d7c3; border-radius: 16px; background: #fffdf4; font-size: 11px; }
 .brand-choice.is-selected { border-color: #8b7197; background: #eee5f1; box-shadow: inset 0 0 0 1px #8b7197; }
-.brand-mark { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; background: white; color: var(--brand-color); font-size: 16px; font-weight: 700; overflow: hidden; }
+.brand-mark { width: 52px; height: 52px; max-width:100%; display: grid; place-items: center; border-radius: 10px; background: white; color: var(--brand-color); font-size: 16px; font-weight: 700; overflow: hidden; }
 .brand-mark img { width: 100%; height: 100%; object-fit: contain; }
 .choice-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .choice-chip { min-height: 40px; padding: 8px 12px; border: 1px solid #e1d7c3; border-radius: 11px; background: #fffdf4; font-size: 12px; }
@@ -295,3 +303,29 @@
 .drink-stamp-count { font-size:12px; color:#9b8368; margin-top:4px; }
 @media(max-width:639px) { .drink-stamp-shelf { grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px 6px; } .drink-stamp-type { gap:3px; } .drink-stamp-type strong { font-size:12px; } .drink-stamp-type > span { font-size:8px; } .drink-stamp-date { font-size:8px; letter-spacing:0; } }
 @media(prefers-reduced-motion:reduce) { .drink-stamp-face { transition:none; } }
+
+/* A shared paper surface lets the seven drink stickers take the focus. */
+.week-strip { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; margin-top: 20px; }
+.weekly-stickers { background: #eff2e6; border-color: #d9decc; }
+.weekly-stickers .week-day { padding: 8px 2px; gap: 3px; }
+.week-day:hover { background: #eee5f14d; }
+.week-day.is-selected { background: #eee5f180; border-color: #cdbbd780; }
+.week-weekday { font-size: 11px; color: #927d64; }
+.week-date { position: relative; isolation: isolate; font-family: Georgia, serif; font-size: 19px; line-height: 28px; min-width: 32px; }
+.week-day.is-today .week-date::before { content: ''; position: absolute; inset: 4px -3px 2px; z-index: -1; background: #e5d8ed; border-radius: 40% 16% 35% 20%; transform: rotate(-6deg); }
+.week-cup-space { position: relative; display: grid; place-items: center; width: 100%; }
+.weekly-stickers .week-cup { width: 100%; height: clamp(68px, 10vw, 120px); margin: 5px 0; }
+.week-day:nth-child(odd) .week-cup.sticker { transform: rotate(-4deg); }
+.week-day:nth-child(even) .week-cup.sticker { transform: rotate(4deg); }
+.week-count { position: absolute; right: 0; bottom: 3px; padding: 1px 4px; border-radius: 7px; background: #fffaf0ed; color: #806b55; font-size: 10px; }
+.home-details .weekly-stickers .week-status { display: block; min-height: 18px; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; line-height: 18px; }
+.week-hint { margin: 12px 0 0; text-align: right; color: #927d64; font-size: 11px; }
+@media (max-width: 639px) {
+  .week-strip { gap: 2px; margin-top: 14px; }
+  .weekly-stickers.paper-panel { padding: 16px 10px; }
+  .weekly-stickers .week-day { padding: 6px 0; }
+  .home-details .weekly-stickers .week-weekday { font-size: 10px; }
+  .weekly-stickers .week-date { font-size: 16px; line-height: 24px; min-width: 25px; }
+  .home-details .weekly-stickers .week-status { font-size: 10px; }
+  .week-hint { font-size: 10px; }
+}

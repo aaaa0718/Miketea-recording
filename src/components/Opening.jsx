@@ -19,8 +19,8 @@ export default function Opening() {
     return () => { document.body.style.overflow = previous; if (shell) shell.inert = false; };
   }, [phase]);
   if (phase === 'done') return null;
-  return <div className={`aa-opening ${phase === 'leaving' ? 'is-leaving' : ''}`} role="status" aria-label="AA 的杯杯小账本，正在打开">
+  return <div className={`aa-opening ${phase === 'leaving' ? 'is-leaving' : ''}`} role="status" aria-label="AA的杯杯小账本，正在打开">
     <div className="opening-art"><OpeningDrinks /><AaPeek intro onDone={finish} /><span className="opening-sparkle">✦</span></div>
-    <div className="opening-title"><p>AA 的杯杯小账本</p></div>
+    <div className="opening-title"><p>AA的杯杯小账本</p></div>
   </div>;
 }

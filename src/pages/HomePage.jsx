@@ -40,10 +40,21 @@ export default function HomePage() {
       <Stat title="换了几种" className="rotate-[.5deg] bg-sky" note="饮品口味，雨露均沾。"><span className="stat-number">{ranked.length}</span><span className="ml-2 text-xs">种</span></Stat>
       <Stat title="最常翻牌" className="-rotate-[.5deg] bg-lilac" note={ranked.length ? `选了它 ${ranked[0][1]} 次，偏心实锤。` : '等一位选手脱颖而出。'}><span className="block truncate py-3 text-sm text-lilac-dark sm:text-xl">{ranked[0]?.[0] || 'C 位空缺'}</span></Stat>
     </section>
-    <section className="paper-panel mb-6"><div className="flex items-center justify-between"><h2 className="text-sm font-medium">一周打卡</h2><Link to={`/calendar?month=${entryDate.slice(0, 7)}${selected ? `&day=${selected}` : ''}`} className="text-[11px] text-muted underline-offset-4 hover:underline">查看杯杯月历 →</Link></div><div className="mt-5 grid grid-cols-7 gap-1 sm:gap-3">{Array.from({ length: 7 }, (_, i) => {
-      const date = offsetDay(week, i), key = dateKey(date), cups = items.filter(row => row.date === key);
-      return <button key={key} className={`week-day ${selected === key ? 'border-lilac-dark bg-lilac/40' : key === dateKey(new Date()) ? 'border-sky-dark bg-sky/50' : 'border-line bg-cream'}`} aria-label={`${shortDate(date)}，${cups.length}杯`} aria-pressed={selected === key} onClick={() => setSelected(selected === key ? null : key)}><span className="text-[9px] text-muted">周{'一二三四五六日'[i]}</span><span className="my-2 font-serif text-base">{date.getDate()}</span><CupPhoto className={`week-cup ${cups.length ? 'sticker' : 'opacity-30'}`} src={photoSrc(cups.at(-1))} alt="" /><span className="week-status text-[8px] text-muted">{cups.length ? `${cups.length} 杯` : '还没记录'}</span></button>;
-    })}</div></section>
+    <section className="paper-panel weekly-stickers mb-6" aria-label="这周喝了什么">
+      <div className="flex items-center justify-between gap-3"><h2 className="text-sm font-medium">这周喝了什么</h2><Link to={`/calendar?month=${entryDate.slice(0, 7)}${selected ? `&day=${selected}` : ''}`} className="text-[11px] text-muted underline-offset-4 hover:underline">查看杯杯月历 →</Link></div>
+      <div className="week-strip">{Array.from({ length: 7 }, (_, i) => {
+        const date = offsetDay(week, i), key = dateKey(date), cups = items.filter(row => row.date === key);
+        const today = key === dateKey(new Date()), latest = cups.at(-1);
+        const label = latest?.name || latest?.category || '';
+        return <button key={key} type="button" className={`week-day ${selected === key ? 'is-selected' : ''} ${today ? 'is-today' : ''}`} aria-label={`${shortDate(date)}${today ? '，今天' : ''}，${cups.length ? `${cups.length}杯，查看记录` : '记一杯'}`} aria-current={today ? 'date' : undefined} aria-pressed={selected === key} onClick={() => { setSelected(key); if (!cups.length) openEditor(null, key); }}>
+          <span className="week-weekday">周{'一二三四五六日'[i]}</span>
+          <span className="week-date">{date.getDate()}</span>
+          <span className="week-cup-space"><CupPhoto className={`week-cup ${cups.length ? 'sticker' : 'week-cup-empty'}`} src={cups.length ? photoSrc(latest) : asset('cup-empty-week.svg')} alt="" />{cups.length > 1 && <span className="week-count">{cups.length}杯</span>}</span>
+          <span className="week-status" title={label}>{label || '\u00a0'}</span>
+        </button>;
+      })}</div>
+      <p className="week-hint">点空杯记一杯，点贴纸翻记录</p>
+    </section>
     <div className="grid items-start gap-5 md:grid-cols-[1.5fr_1fr]">
       <section className="paper-panel"><p className="mb-3 font-serif text-[9px] italic tracking-widest text-muted">THIS WEEK’S CUP LOG</p><div className="flex items-center justify-between"><h2 className="text-sm font-medium">{selected ? `${selected.slice(5).replace('-', ' / ')} 的饮品` : '这周喝的，都在这儿'}</h2>{selected && <button className="text-xs text-muted" onClick={() => setSelected(null)}>查看整周</button>}</div><RecordList records={items.filter(row => !selected || row.date === selected)} date={entryDate} /></section>
       <section className="paper-panel bg-sky/40"><h2 className="text-sm font-medium">我的口味偏好</h2>{ranked.length ? ranked.map(([category, count], i) => <div key={category} className="mt-5"><div className="mb-2 flex justify-between gap-2 text-xs"><span>{category}</span><span>{count} 杯 · {Math.round(count / items.length * 100)}%</span></div><div className="h-2 overflow-hidden rounded-full bg-ink/5"><div className={['bg-lilac-dark/50', 'bg-sky-dark/70', 'bg-[#dbc887]'][i % 3]} style={{ width: `${count / items.length * 100}%`, height: '100%' }} /></div></div>) : <p className="py-10 text-center text-xs leading-loose text-muted">先喝几杯，<br />再看看自己偏爱哪种。</p>}<p className="mt-7 border-t border-dashed border-line pt-5 text-[11px] leading-loose text-muted">下次点单没主意？<br />来翻翻之前喝过的。</p></section>

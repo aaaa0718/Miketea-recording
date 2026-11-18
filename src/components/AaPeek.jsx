@@ -14,10 +14,14 @@ export default function AaPeek({ intro = false, onDone }) {
       const progress = reduced || !intro ? 1 : Math.min(1, Math.max(0, (elapsed - 150) / 700));
       const rise = 1 - (1 - progress) ** 3;
       const blink = intro && elapsed > 1050 && elapsed < 1250;
-      if (intro) ctx.drawImage(image, w * .08, h * .55, w * .34, h * .42, 80, 270, 240, 280);
-      ctx.save(); ctx.beginPath(); ctx.rect(0, 0, 400, intro ? 293 : 480); ctx.clip();
-      ctx.drawImage(image, blink ? w / 2 : 0, 0, w / 2, h / 2, 45, intro ? (1 - rise) * 310 : 0, 310, 310);
+      // Keep the rising portrait within the cup opening. The cut line sits
+      // behind the opaque cup, which must be painted AFTER the portrait.
+      ctx.save(); ctx.beginPath(); ctx.rect(0, 0, 400, intro ? 310 : 480); ctx.clip();
+      ctx.drawImage(image, blink ? w / 2 : 0, 0, w / 2, h / 2,
+        intro ? 80 : 45, intro ? 65 + (1 - rise) * 260 : 0,
+        intro ? 240 : 310, intro ? 240 : 310);
       ctx.restore();
+      if (intro) ctx.drawImage(image, w * .08, h * .55, w * .34, h * .42, 80, 270, 240, 280);
     }
     image.onload = () => {
       if (stopped) return;
