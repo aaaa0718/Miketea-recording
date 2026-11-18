@@ -1,3 +1,4 @@
+import TasteCups from '../components/TasteCups.jsx';
 import DrinkStickers from '../components/DrinkStickers.jsx';
 import CupPhoto from '../components/CupPhoto.jsx';
 import { useEffect, useRef, useState } from 'react';
@@ -57,7 +58,7 @@ export default function HomePage() {
     </section>
     <div className="grid items-start gap-5 md:grid-cols-[1.5fr_1fr]">
       <section className="paper-panel"><p className="mb-3 font-serif text-[9px] italic tracking-widest text-muted">THIS WEEK’S CUP LOG</p><div className="flex items-center justify-between"><h2 className="text-sm font-medium">{selected ? `${selected.slice(5).replace('-', ' / ')} 的饮品` : '这周喝的，都在这儿'}</h2>{selected && <button className="text-xs text-muted" onClick={() => setSelected(null)}>查看整周</button>}</div><RecordList records={items.filter(row => !selected || row.date === selected)} date={entryDate} /></section>
-      <section className="paper-panel bg-sky/40"><h2 className="text-sm font-medium">我的口味偏好</h2>{ranked.length ? ranked.map(([category, count], i) => <div key={category} className="mt-5"><div className="mb-2 flex justify-between gap-2 text-xs"><span>{category}</span><span>{count} 杯 · {Math.round(count / items.length * 100)}%</span></div><div className="h-2 overflow-hidden rounded-full bg-ink/5"><div className={['bg-lilac-dark/50', 'bg-sky-dark/70', 'bg-[#dbc887]'][i % 3]} style={{ width: `${count / items.length * 100}%`, height: '100%' }} /></div></div>) : <p className="py-10 text-center text-xs leading-loose text-muted">先喝几杯，<br />再看看自己偏爱哪种。</p>}<p className="mt-7 border-t border-dashed border-line pt-5 text-[11px] leading-loose text-muted">下次点单没主意？<br />来翻翻之前喝过的。</p></section>
+      <TasteCups records={items} />
     </div>
     </div>
     {showQuickAdd && !editor && <button className="mobile-quick-add sm:hidden" onClick={() => openEditor(null, entryDate)}>＋ 记一杯</button>}

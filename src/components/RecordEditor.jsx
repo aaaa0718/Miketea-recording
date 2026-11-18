@@ -24,6 +24,13 @@ export default function RecordEditor({ record, date }) {
     change('toppings', current.includes(value) ? current.filter(v => v !== value) : [...current, value]);
   }
   const dialog = useRef(null);
+  const drinkName = useRef(null);
+  function brandSelected() {
+    requestAnimationFrame(() => {
+      drinkName.current?.focus({ preventScroll: true });
+      drinkName.current?.scrollIntoView({ block: 'nearest' });
+    });
+  }
   const categories = [...new Set([...CATEGORIES, ...records.map(row => row.category)])];
   const change = (key, value) => setForm(previous => ({ ...previous, [key]: value }));
   useEffect(() => {
@@ -51,8 +58,8 @@ export default function RecordEditor({ record, date }) {
         <label className="field col-span-2 sm:col-span-1">日期 *<input name="date" type="date" required value={form.date} onChange={event => change('date', event.target.value)} /></label>
         <label className="field col-span-2 sm:col-span-1">品类 *<select name="category" value={custom ? '__custom' : form.category} onChange={event => { setCustom(event.target.value === '__custom'); if (event.target.value !== '__custom') change('category', event.target.value); }}>{categories.map(c => <option key={c}>{c}</option>)}<option value="__custom">＋ 自定义品类</option></select></label>
         {custom && <label className="field col-span-2">自定义品类 *<input autoFocus required maxLength={20} value={customCategory} onChange={event => setCustomCategory(event.target.value)} placeholder="例如：酸奶饮品" /></label>}
-        <div className="col-span-2"><BrandPicker value={form.brand} onChange={value => change('brand', value)} records={records} /></div>
-        <label className="field col-span-2">饮品名 *<input name="name" required maxLength={60} value={form.name} onChange={event => change('name', event.target.value)} placeholder="这杯叫什么名字？" /></label>
+        <div className="col-span-2"><BrandPicker onSelect={brandSelected} value={form.brand} onChange={value => change('brand', value)} records={records} /></div>
+        <label className="field col-span-2">饮品名 *<input ref={drinkName} name="name" required maxLength={60} value={form.name} onChange={event => change('name', event.target.value)} placeholder="这杯叫什么名字？" /></label>
         {historyNames.length > 0 && <div className="col-span-2"><p className="mb-2 text-xs text-muted">这家以前喝过</p><div className="choice-row">{historyNames.map(name => <button type="button" className="choice-chip" key={name} onClick={() => change('name', name)}>{name}</button>)}</div></div>}
         <Choices title="甜度" values={[...new Set([...SUGARS, form.sugar].filter(Boolean))]} value={form.sugar || '未选择'} onChange={v => change('sugar', v)} />
         <Choices title="冰量" values={[...new Set([...ICES, form.ice].filter(Boolean))]} value={form.ice || '未选择'} onChange={v => change('ice', v)} />

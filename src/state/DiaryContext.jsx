@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { readStore, writeStore, STORAGE_KEY, decodeRecords, parseBackup, mergeRecords } from '../lib/records.js';
 import { dateKey } from '../lib/dates.js';
+import { playSound } from '../lib/sounds.js';
 import { drinkStampKey } from '../lib/collection.js';
 
 const DiaryContext = createContext(null);
@@ -36,11 +37,13 @@ export function DiaryProvider({ children }) {
     setStore(current.current);
   }
   function save(record) {
+    const newStamp = !current.current.records.some(row => drinkStampKey(row) === drinkStampKey(record));
     commit(rows => {
       const stampDesign = record.stampDesign || rows.find(row => drinkStampKey(row) === drinkStampKey(record) && row.stampDesign)?.stampDesign;
       return [...rows.filter(row => row.id !== record.id), { ...record, ...(stampDesign ? { stampDesign } : {}) }];
     });
     notify('这杯已归入 AA 名下。', 'saved');
+    void playSound('saved', { newStamp });
   }
   function remove(id) { commit(rows => rows.filter(row => row.id !== id)); notify('这杯记录已删除'); }
   function setStampDesign(key, stampDesign) {

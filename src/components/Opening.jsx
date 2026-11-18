@@ -1,9 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
+import { playSound } from '../lib/sounds.js';
 import AaPeek from './AaPeek.jsx';
 import OpeningDrinks from './OpeningDrinks.jsx';
 
 export default function Opening() {
   const [phase, setPhase] = useState('playing');
+  useEffect(() => {
+    let active = true;
+    if (phase === 'playing') void playSound('opening', { isActive: () => active });
+    return () => { active = false; };
+  }, [phase]);
   const finish = useCallback(() => setPhase('leaving'), []);
   useEffect(() => {
     if (phase !== 'leaving') return;

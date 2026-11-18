@@ -329,3 +329,45 @@
   .home-details .weekly-stickers .week-status { font-size: 10px; }
   .week-hint { font-size: 10px; }
 }
+
+.taste-panel { background: #f5f4ed; overflow: hidden; }
+.taste-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.taste-heading > span { font-size: 10px; color: #99866e; white-space: nowrap; }
+.taste-intro { margin-top: 10px; color: #99866e; font-size: 12px; }
+.taste-cups { display: flex; justify-content: center; gap: 8px; margin: 18px 0 10px; align-items: flex-end; }
+.taste-item { display: flex; flex: 1; max-width: 125px; min-width: 0; align-items: center; flex-direction: column; }
+.taste-item svg { width: 100%; max-height: 155px; overflow: visible; }
+.taste-item.is-favorite svg { transform: scale(1.05); transform-origin: bottom; }
+.taste-badge { font-size: 10px; line-height: 18px; min-height: 18px; color: #896996; padding: 0 7px; margin-bottom: 7px; }
+.is-favorite .taste-badge { background: #e8deed; border-radius: 5px 9px 4px 8px; transform: rotate(-5deg); }
+.taste-name { font-size: 12px; text-align: center; margin-top: 5px; overflow-wrap: anywhere; }
+.taste-amount { font-size: 10px; color: #99866e; margin-top: 5px; }
+.taste-cups.is-empty svg { opacity: .65; }
+.taste-cups.is-empty .taste-name { color: #aa967e; }
+.taste-caption { font-size: 10px; text-align: center; color: #99866e; margin: 16px 0 0; }
+.taste-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; border-top: 1px dashed #ded4c3; padding-top: 15px; }
+.taste-tags span { font-size: 11px; line-height: 1.7; border-radius: 5px; padding: 4px 8px; background: #fffaf0; color: #8c755e; }
+
+/* Liquid moves inside the fixed cup clip; the average fill level stays put. */
+.taste-liquid { animation: taste-slosh 4.8s ease-in-out infinite; transform-box: view-box; }
+.taste-wave { animation: taste-wave-drift 3.8s linear infinite; }
+.taste-wave-back { animation-duration: 5.3s; animation-direction: reverse; }
+.taste-item:nth-child(2) .taste-liquid { animation-delay: -1.7s; }
+.taste-item:nth-child(3) .taste-liquid { animation-delay: -3.2s; }
+.taste-item:nth-child(2) .taste-wave-front { animation-delay: -1.2s; }
+.taste-item:nth-child(3) .taste-wave-front { animation-delay: -2.5s; }
+@keyframes taste-wave-drift { from { transform: translateX(0); } to { transform: translateX(80px); } }
+@keyframes taste-slosh { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+@media (prefers-reduced-motion: reduce) { .taste-liquid, .taste-wave { animation: none; } }
+
+.nav-icon { display: none; }
+@media (max-width: 639px) {
+  .main-navigation { position: fixed; z-index: 35; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 3px; padding: 8px max(8px, env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom, 0px)) max(8px, env(safe-area-inset-left)); border-top: 1px solid #dfd4c1; background: #fffaf0; box-shadow: 0 -4px 18px #6955400c; }
+  .main-navigation a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 55px; padding: 4px 0; color: #89755f; font-size: 11px; line-height: 18px; white-space: nowrap; border-radius: 10px; }
+  .main-navigation a.is-current { color: #70557e; background: #e9dfee; font-weight: 600; }
+  .nav-icon { display: block; width: 25px; height: 25px; }
+  .nav-icon svg { display: block; width: 100%; height: 100%; }
+  .diary-shell { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
+  .mobile-quick-add { bottom: calc(87px + env(safe-area-inset-bottom, 0px)); }
+  .aa-saved-notice { bottom: calc(145px + env(safe-area-inset-bottom, 0px)); }
+}
