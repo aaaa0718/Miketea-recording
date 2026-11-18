@@ -59,5 +59,5 @@ export function budgetText(count) {
   if (count === 1) return '还剩 2 杯，选妃继续。';
   if (count === 2) return '最后 1 杯，慎重翻牌。';
   if (count === WEEKLY_LIMIT) return '本周满员，下周请早。';
-  return `超出 ${count - WEEKLY_LIMIT} 杯。行，也记上。`;
+  return 'AA超额了！不能再喝了！';
 }
