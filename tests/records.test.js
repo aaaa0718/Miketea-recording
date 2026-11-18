@@ -32,5 +32,5 @@ test('闰年月份、月末切换和统计特殊字符串', () => {
   assert.equal(monthCells(parseDate('2024-02-01')).filter(Boolean).length, 29);
   assert.equal(dateKey(offsetMonth(parseDate('2026-01-31'), 1)), '2026-02-01');
   assert.deepEqual(rankRecords([{ category: '__proto__' }, { category: '__proto__' }]), [['__proto__', 2]]);
-  assert.match(budgetText(4), /超出 1/);
+  assert.equal(budgetText(4), 'AA超额了！不能再喝了！');
 });
