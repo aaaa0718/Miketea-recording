@@ -1,0 +1,67 @@
+[
+  {
+    "flavor": "mango",
+    "asset": "public/stamps/watercolor/mango.webp",
+    "source": "/Users/jennie/.codex/generated_images/01a1ecd9-62cd-7ae3-94c8-fe99ffec6bc7/exec-76a736cb-1c79-4c31-b567-7ce5f072e45c.png"
+  },
+  {
+    "flavor": "strawberry",
+    "asset": "public/stamps/watercolor/strawberry.webp",
+    "source": "/Users/jennie/.codex/generated_images/01a1ecd9-62cd-7ae3-94c8-fe99ffec6bc7/exec-e8586d48-c720-4faa-8c04-06eaf8539506.png"
+  },
+  {
+    "flavor": "peach",
+    "asset": "public/stamps/watercolor/peach.webp",
+    "source": "/Users/jennie/.codex/generated_images/01a1ecd9-62cd-7ae3-94c8-fe99ffec6bc7/exec-9748dc4e-fb1e-4c4d-9b0d-faec0d153359.png"
+  },
+  {
+    "flavor": "lemon",
+    "asset": "public/stamps/watercolor/lemon.webp",
+    "source": "/Users/jennie/.codex/generated_images/01a1ecd9-62cd-7ae3-94c8-fe99ffec6bc7/exec-263ef746-6466-4be0-8992-773c9b2cafb3.png"
+  },
+  {
+    "flavor": "orange",
+    "asset": "public/stamps/watercolor/orange.webp",
+    "source": "/Users/jennie/.codex/generated_images/01a1ecd9-62cd-7ae3-94c8-fe99ffec6bc7/exec-7b073a48-7c1c-497b-a5df-9ecaec5ce842.png"
+  },
+  {
+    "flavor": "coconut",
+    "asset": "public/stamps/watercolor/coconut.webp",
+    "source": "/Users/jennie/.codex/generated_images/01a1ecd9-62cd-7ae3-94c8-fe99ffec6bc7/exec-01da544b-2ea4-40bc-b231-69e4a6bb271f.png"
+  },
+  {
+    "flavor": "taro",
+    "asset": "public/stamps/watercolor/taro.webp",
+    "source": "/Users/jennie/.codex/generated_images/01a1ecd9-62cd-7ae3-94c8-fe99ffec6bc7/exec-9a7c7cd4-6540-469b-a960-6ac98265b777.png"
+  },
+  {
+    "flavor": "tea",
+    "asset": "public/stamps/watercolor/tea.webp",
+    "source": "/Users/jennie/.codex/generated_images/01a1ecd9-62cd-7ae3-94c8-fe99ffec6bc7/exec-ca2eb411-6aea-48dd-99fd-9018cfc13c32.png"
+  },
+  {
+    "flavor": "generic",
+    "asset": "public/stamps/watercolor/generic.webp",
+    "source": "/Users/jennie/.codex/generated_images/01a1ecd9-62cd-7ae3-94c8-fe99ffec6bc7/exec-cf3f731d-f39b-4127-878c-318584c16d9c.png"
+  },
+  {
+    "flavor": "grape",
+    "asset": "public/stamps/watercolor/grape.webp",
+    "source": "/Users/jennie/.codex/generated_images/01a1ecd9-62cd-7ae3-94c8-fe99ffec6bc7/exec-9c4de757-a970-46a5-9804-68fd613105f1.png"
+  },
+  {
+    "flavor": "matcha",
+    "asset": "public/stamps/watercolor/matcha.webp",
+    "source": "/Users/jennie/.codex/generated_images/01a1ecd9-62cd-7ae3-94c8-fe99ffec6bc7/exec-d50b1ab3-9484-49a9-bc4a-1f1b913ff103.png"
+  },
+  {
+    "flavor": "coffee",
+    "asset": "public/stamps/watercolor/coffee.webp",
+    "source": "/Users/jennie/.codex/generated_images/01a1ecd9-62cd-7ae3-94c8-fe99ffec6bc7/exec-c8e971f1-4120-48aa-bcfb-f3e20e95fdea.png"
+  },
+  {
+    "flavor": "pearls",
+    "asset": "public/stamps/watercolor/pearls.webp",
+    "source": "/Users/jennie/.codex/generated_images/01a1ecd9-62cd-7ae3-94c8-fe99ffec6bc7/exec-b6d2da7a-3fd2-4383-80b3-9f956a0fbf5b.png"
+  }
+]

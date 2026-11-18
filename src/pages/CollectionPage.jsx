@@ -1,49 +1,55 @@
-import { useId, useState } from 'react';
+import { useState } from 'react';
 import { useDiary } from '../state/DiaryContext.jsx';
 import { newestFirst } from '../lib/records.js';
-import { brandStamps } from '../lib/collection.js';
+import { drinkStamps, drinkStampKey } from '../lib/collection.js';
 import { photoSrc } from '../lib/assets.js';
+import { STAMP_FLAVORS, STAMP_FRAMES } from '../lib/stampDesigns.js';
+import StampArtwork from '../components/StampArtwork.jsx';
 import CupPhoto from '../components/CupPhoto.jsx';
 import AaReaction from '../components/AaReaction.jsx';
 import BackupPage from './BackupPage.jsx';
 
-function BrandStamp({ stamp, index, onClick }) {
-  const id = `stamp-${useId().replace(/:/g, '')}`;
-  const label = stamp.brand.length > 13 ? `${stamp.brand.slice(0, 12)}…` : stamp.brand;
-  return <button type="button" className={`brand-stamp stamp-ink-${index % 3}`} onClick={onClick} aria-label={`查看${stamp.brand}的 ${stamp.count} 杯记录`}>
-    <svg viewBox="0 0 180 180" aria-hidden="true">
-      <defs><path id={id} d="M27 92a63 63 0 0 1 126 0" /></defs>
-      <circle cx="90" cy="90" r="79" /><circle cx="90" cy="90" r="72" strokeDasharray="2 4" />
-      <text className="stamp-brand" fontSize={label.length > 8 ? 12 : 15}><textPath href={`#${id}`} startOffset="50%" textAnchor="middle">{label}</textPath></text>
-      <path d="M72 67h36l-5 29H77Zm17-13 4-10m-2 25 3-12" strokeWidth="2" />
-      <path d="m82 83 3 2m11-2 3 2" strokeWidth="2" />
-      <text x="90" y="118" textAnchor="middle" className="stamp-date">{stamp.date.replaceAll('-', '.')}</text>
-      <text x="90" y="139" textAnchor="middle" className="stamp-caption">AA · 喝过留章</text>
-    </svg>
-    <span>{stamp.count} 杯记录</span>
-  </button>;
+function DrinkStamp({ stamp, onClick }) {
+  const { setStampDesign } = useDiary();
+  const [error, setError] = useState('');
+  function change(key, value) {
+    try { setStampDesign(stamp.key, { flavor: 'auto', frame: 'auto', ...stamp.stampDesign, [key]: value }); setError(''); }
+    catch (e) { setError(e.message); }
+  }
+  return <div className="drink-stamp-item"><button type="button" style={{color:stamp.design.ink}} className={`drink-stamp drink-stamp--${stamp.design.art || 'composed'}`} onClick={onClick} aria-label={`查看 ${stamp.brand} ${stamp.name}，喝过 ${stamp.count} 次`}>
+    <span className="drink-stamp-face">
+      <StampArtwork design={stamp.design} />
+      <span className="drink-stamp-type"><strong>{stamp.name.length > 12 ? `${stamp.name.slice(0, 11)}…` : stamp.name}</strong><span>{stamp.brand || '我的一杯'}</span></span>
+      <span className="drink-stamp-date">{stamp.date.replaceAll('-', '.')}</span>
+    </span>
+    <span className="drink-stamp-label">{stamp.name}</span><span className="drink-stamp-count">喝过 × {stamp.count}</span>
+  </button><details className="stamp-customize"><summary>换个章面</summary>
+    <label>口味<select aria-label={`${stamp.name}的印章口味`} value={stamp.stampDesign?.flavor || 'auto'} onChange={e=>change('flavor',e.target.value)}><option value="auto">自动识别</option>{Object.entries(STAMP_FLAVORS).map(([key,value])=><option key={key} value={key}>{value.label}</option>)}</select></label>
+    <label>边框<select aria-label={`${stamp.name}的印章边框`} value={stamp.stampDesign?.frame || 'auto'} onChange={e=>change('frame',e.target.value)}>{Object.entries(STAMP_FRAMES).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select></label>
+    <p>同款饮品共用，自动保存。</p>
+  </details>{error && <p role="alert" className="text-xs text-rose-800">{error}</p>}</div>;
 }
 
 export default function CollectionPage() {
   const { records, openEditor, error } = useDiary();
-  const [view, setView] = useState('stamps'), [brand, setBrand] = useState('');
-  const stamps = brandStamps(records);
-  const shown = newestFirst(records.filter(row => !brand || row.brand.trim() === brand));
+  const [view, setView] = useState('stamps'), [selected, setSelected] = useState(null);
+  const stamps = drinkStamps(records);
+  const shown = newestFirst(records.filter(row => !selected || drinkStampKey(row) === selected.key));
   return <section className="collection-page py-7 sm:py-10">
     <div className="collection-heading"><div><p className="collection-eyebrow">AA’S LITTLE COLLECTION</p><h1>AA 的杯杯集章册</h1><p className="mt-2 text-xs text-muted">喝过的每一杯，都有自己的位置。</p></div><button className="btn-primary text-xs" onClick={() => openEditor()}>＋ 记一杯</button></div>
-    <div className="collection-switch" role="group" aria-label="收藏类型"><button type="button" aria-pressed={view === 'stickers'} onClick={() => setView('stickers')}>奶茶贴纸 <span>{records.length}</span></button><button type="button" aria-pressed={view === 'stamps'} onClick={() => { setView('stamps'); setBrand(''); }}>品牌印章 <span>{stamps.length}</span></button></div>
+    <div className="collection-switch" role="group" aria-label="收藏类型"><button type="button" aria-pressed={view === 'stickers'} onClick={() => { setView('stickers'); setSelected(null); }}>奶茶贴纸 <span>{records.length}</span></button><button type="button" aria-pressed={view === 'stamps'} onClick={() => { setView('stamps'); setSelected(null); }}>饮品印章 <span>{stamps.length}</span></button></div>
     <div className="collection-book">
-      <div className="collection-book-heading"><span>{view === 'stickers' ? '一杯一贴，慢慢收藏' : '喝过一家，留下一枚'}</span><span className="text-[10px] text-muted">{view === 'stickers' ? '点击贴纸，翻看这杯' : '点击印章，翻看这个品牌'}</span></div>
+      <div className="collection-book-heading"><span>{view === 'stickers' ? '一杯一贴，慢慢收藏' : '每款喜欢，都有专属印记'}</span><span className="text-[10px] text-muted">{view === 'stickers' ? '点击贴纸，翻看这杯' : '点击印章，翻看这款饮品'}</span></div>
       {view === 'stickers' && <>
-        {brand && <div className="collection-filter"><span>{brand} · {shown.length} 杯</span><button type="button" onClick={() => setBrand('')}>查看全部 ×</button></div>}
+        {selected && <div className="collection-filter"><span>{selected.brand} · {selected.name} · {shown.length} 杯</span><button type="button" onClick={() => setSelected(null)}>查看全部 ×</button></div>}
         {shown.length ? <div className="sticker-shelf">{shown.map((record, i) => <button type="button" className="collected-sticker" key={record.id} onClick={() => openEditor(record)} aria-label={`查看 ${record.name || record.category}，${record.date}`}>
           <div className="collected-cup" style={{ '--sticker-angle': `${[-7, 5, -3, 7][i % 4]}deg` }}><CupPhoto src={photoSrc(record)} className="sticker" alt="" /></div>
           <span className="collected-name">{record.name || record.category}</span><span className="collected-brand">{record.brand || '我的一杯'}</span><span className="collected-date">{record.date.replaceAll('-', '.')}</span>
         </button>)}</div> : <div className="collection-empty"><AaReaction /><p>第一张贴纸的位置，给你留好了。</p><button type="button" className="btn-small mt-4" onClick={() => openEditor()}>记下第一杯</button></div>}
       </>}
       {view === 'stamps' && <>
-        <p className="mb-6 text-xs leading-loose text-muted">每个已记录的品牌一枚章，日期是现有记录中的第一次相遇。</p>
-        {stamps.length ? <div className="stamp-shelf">{stamps.map((stamp, i) => <BrandStamp key={stamp.brand} stamp={stamp} index={i} onClick={() => { setBrand(stamp.brand); setView('stickers'); }} />)}</div> : <div className="collection-empty"><div className="empty-stamp">AA<br /><span>待盖章</span></div><p>记录时选个品牌，就会留下第一枚纪念章。</p><button type="button" className="btn-small mt-4" onClick={() => openEditor()}>去记一杯</button></div>}
+        <p className="mb-6 text-xs leading-loose text-muted">同品牌、同饮品收藏一枚章，重复喝会累积次数。日期是第一次记录；甜度、冰量不另分章。</p>
+        {stamps.length ? <div className="drink-stamp-shelf">{stamps.map(stamp => <DrinkStamp key={stamp.key} stamp={stamp} onClick={() => { setSelected(stamp); setView('stickers'); }} />)}</div> : <div className="collection-empty"><div className="empty-stamp">AA<br /><span>待盖章</span></div><p>记下饮品名字，收藏第一枚专属纪念章。</p><button type="button" className="btn-small mt-4" onClick={() => openEditor()}>去记一杯</button></div>}
       </>}
       <p className="collection-book-footer">{view === 'stickers' ? '属于 AA 的杯杯回忆' : '每一枚，都是喝过的印记'} · ♡</p>
     </div>

@@ -1,4 +1,5 @@
 import { isDate, dateKey, offsetDay, monthPrefix } from './dates.js';
+import { validStampDesign } from './stampDesigns.js';
 
 export const STORAGE_KEY = 'tea-diary-v1';
 export const WEEKLY_LIMIT = 3;
@@ -9,6 +10,7 @@ export function validRecord(record) {
   return !!record && typeof record.id === 'string' && record.id.length > 0 && isDate(record.date)
     && typeof record.category === 'string' && record.category.trim().length > 0 && record.category.length <= 20
     && ['name', 'brand', 'sugar', 'ice', 'note'].every(key => typeof record[key] === 'string' && record[key].length <= 200)
+    && validStampDesign(record.stampDesign)
     && (record.size === undefined || (typeof record.size === 'string' && record.size.length <= 20))
     && (record.toppings === undefined || (Array.isArray(record.toppings) && record.toppings.length <= 12 && record.toppings.every(v => typeof v === 'string' && v.length > 0 && v.length <= 30)))
     && (record.price === undefined || record.price === null || (typeof record.price === 'number' && Number.isFinite(record.price) && record.price >= 0 && record.price <= 99999))
