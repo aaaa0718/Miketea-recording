@@ -4,6 +4,7 @@ import { newestFirst } from '../lib/records.js';
 import { drinkStamps, drinkStampKey } from '../lib/collection.js';
 import { photoSrc } from '../lib/assets.js';
 import { STAMP_FLAVORS, STAMP_FRAMES } from '../lib/stampDesigns.js';
+import StampDetails from '../components/StampDetails.jsx';
 import StampArtwork from '../components/StampArtwork.jsx';
 import CupPhoto from '../components/CupPhoto.jsx';
 import AaReaction from '../components/AaReaction.jsx';
@@ -34,14 +35,15 @@ export default function CollectionPage() {
   const { records, openEditor, error } = useDiary();
   const [view, setView] = useState('stamps'), [selected, setSelected] = useState(null);
   const stamps = drinkStamps(records);
-  const shown = newestFirst(records.filter(row => !selected || drinkStampKey(row) === selected.key));
+  const shown = newestFirst(records);
+  const selectedStamp = stamps.find(stamp => stamp.key === selected);
   return <section className="collection-page py-7 sm:py-10">
     <div className="collection-heading"><div><p className="collection-eyebrow">AA’S LITTLE COLLECTION</p><h1>AA 的杯杯集章册</h1><p className="mt-2 text-xs text-muted">喝过的每一杯，都有自己的位置。</p></div><button className="btn-primary text-xs" onClick={() => openEditor()}>＋ 记一杯</button></div>
     <div className="collection-switch" role="group" aria-label="收藏类型"><button type="button" aria-pressed={view === 'stickers'} onClick={() => { setView('stickers'); setSelected(null); }}>奶茶贴纸 <span>{records.length}</span></button><button type="button" aria-pressed={view === 'stamps'} onClick={() => { setView('stamps'); setSelected(null); }}>饮品印章 <span>{stamps.length}</span></button></div>
     <div className="collection-book">
       <div className="collection-book-heading"><span>{view === 'stickers' ? '一杯一贴，慢慢收藏' : '每款喜欢，都有专属印记'}</span><span className="text-[10px] text-muted">{view === 'stickers' ? '点击贴纸，翻看这杯' : '点击印章，翻看这款饮品'}</span></div>
       {view === 'stickers' && <>
-        {selected && <div className="collection-filter"><span>{selected.brand} · {selected.name} · {shown.length} 杯</span><button type="button" onClick={() => setSelected(null)}>查看全部 ×</button></div>}
+
         {shown.length ? <div className="sticker-shelf">{shown.map((record, i) => <button type="button" className="collected-sticker" key={record.id} onClick={() => openEditor(record)} aria-label={`查看 ${record.name || record.category}，${record.date}`}>
           <div className="collected-cup" style={{ '--sticker-angle': `${[-7, 5, -3, 7][i % 4]}deg` }}><CupPhoto src={photoSrc(record)} className="sticker" alt="" /></div>
           <span className="collected-name">{record.name || record.category}</span><span className="collected-brand">{record.brand || '我的一杯'}</span><span className="collected-date">{record.date.replaceAll('-', '.')}</span>
@@ -49,10 +51,11 @@ export default function CollectionPage() {
       </>}
       {view === 'stamps' && <>
         <p className="mb-6 text-xs leading-loose text-muted">同品牌、同饮品收藏一枚章，重复喝会累积次数。日期是第一次记录；甜度、冰量不另分章。</p>
-        {stamps.length ? <div className="drink-stamp-shelf">{stamps.map(stamp => <DrinkStamp key={stamp.key} stamp={stamp} onClick={() => { setSelected(stamp); setView('stickers'); }} />)}</div> : <div className="collection-empty"><div className="empty-stamp">AA<br /><span>待盖章</span></div><p>记下饮品名字，收藏第一枚专属纪念章。</p><button type="button" className="btn-small mt-4" onClick={() => openEditor()}>去记一杯</button></div>}
+        {stamps.length ? <div className="drink-stamp-shelf">{stamps.map(stamp => <DrinkStamp key={stamp.key} stamp={stamp} onClick={event => { event.currentTarget.focus({ preventScroll: true }); setSelected(stamp.key); }} />)}</div> : <div className="collection-empty"><div className="empty-stamp">AA<br /><span>待盖章</span></div><p>记下饮品名字，收藏第一枚专属纪念章。</p><button type="button" className="btn-small mt-4" onClick={() => openEditor()}>去记一杯</button></div>}
       </>}
       <p className="collection-book-footer">{view === 'stickers' ? '属于 AA 的杯杯回忆' : '每一枚，都是喝过的印记'} · ♡</p>
     </div>
+    {selectedStamp && <StampDetails stamp={selectedStamp} records={records.filter(row => drinkStampKey(row) === selected)} onClose={() => setSelected(null)} />}
     <details className="collection-backup" open={error ? true : undefined}><summary>收好这本小账本 <span>备份 / 恢复记录</span></summary><BackupPage /></details>
   </section>;
 }

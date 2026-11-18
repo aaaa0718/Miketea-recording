@@ -4,8 +4,10 @@
 .record-form-header { flex:none; padding:20px 20px 16px; border-bottom:1px solid #e1d7c3; }
 .record-form-body { min-height:0; overflow-y:auto; overscroll-behavior:contain; padding:20px; scroll-padding-block:16px; }
 .record-form-footer { flex:none; display:grid; gap:10px; padding:14px 20px max(14px, env(safe-area-inset-bottom)); border-top:1px solid #e1d7c3; background:#fffdf3; box-shadow:0 -4px 16px #6955400a; }
-.record-form-footer .record-save { flex:1; min-height:46px; font-size:15px; }
-.record-save:disabled { opacity:.5; cursor:not-allowed; box-shadow:none; }
+.record-form-footer .record-save { flex:1; min-height:48px; font-size:16px; font-weight:600; background:#80648e; border-color:#70557e; color:#fff; box-shadow:0 3px 0 #60476d; }
+.record-form-footer .record-save:hover:not(:disabled) { background:#70557e; }
+.record-form-footer .record-save:active:not(:disabled) { background:#60476d; box-shadow:none; transform:translateY(2px); }
+.record-form-footer .record-save:disabled { background:#eee9ef; border-color:#ddd5df; color:#a79bac; opacity:1; cursor:not-allowed; box-shadow:none; }
 @media(min-width:640px) { .record-form-header { padding:24px 28px 16px; } .record-form-body { padding:20px 28px; } .record-form-footer { padding-inline:28px; } }
 
 .drink-stamp-item { min-width:0; }
@@ -371,3 +373,16 @@
   .mobile-quick-add { bottom: calc(87px + env(safe-area-inset-bottom, 0px)); }
   .aa-saved-notice { bottom: calc(145px + env(safe-area-inset-bottom, 0px)); }
 }
+
+.stamp-detail-dialog { position: fixed; inset: 0; margin: auto; width: calc(100% - 28px); max-width: 540px; max-height: 90dvh; padding: 0; border: 1px solid #dfd4c1; border-radius: 16px; background: #fffdf3; color: #796049; overflow: hidden; }
+.stamp-detail-dialog[open] { display: flex; flex-direction: column; }
+.stamp-detail-dialog::backdrop { background: #45372c66; backdrop-filter: blur(4px); }
+.stamp-detail-header { display: flex; flex: none; justify-content: space-between; align-items: start; gap: 16px; padding: 20px; border-bottom: 1px solid #e1d7c3; }
+.stamp-detail-header h2 { font-size: 18px; font-weight: 600; }
+.stamp-detail-header p { font-size: 12px; margin-top: 6px; overflow-wrap: anywhere; }
+.stamp-detail-body { padding: 20px; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.stamp-detail-art { width: 100%; max-width: 320px; margin: 0 auto; }
+.stamp-detail-summary { text-align: center; font-size: 12px; margin-top: 12px; }
+.stamp-detail-history li { padding: 14px 0; border-bottom: 1px dashed #dfd4c1; font-size: 12px; line-height: 1.8; overflow-wrap: anywhere; }
+.stamp-detail-history time { font-weight: 600; color: #80648e; }
+.stamp-detail-note { margin-top: 6px; }
