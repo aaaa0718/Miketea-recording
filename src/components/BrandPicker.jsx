@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { BRANDS, recentBrands } from '../lib/brands.js';
-import artwork from '../assets/embedded-art.json';
+import { useArtwork } from '../lib/useArtwork.js';
 
 function BrandMark({ name }) {
   const brand = BRANDS.find(item => item.name === name);
-  const [failed, setFailed] = useState(false);
+  const src = useArtwork(brand?.logo ? `brands/${brand.id}.${brand.logo}` : null);
+  const [failed, setFailed] = useState(null);
   return <span className="brand-mark" style={{ '--brand-color': brand?.color || '#8b7197' }}>
-    {brand?.logo && !failed ? <img src={artwork[`brands/${brand.id}.${brand.logo}`]} width="52" height="52" alt="" onError={() => setFailed(true)} /> : <span>{brand?.mark || name.slice(0, 2)}</span>}
+    {brand?.logo && failed !== src ? <img src={src} width="52" height="52" alt="" onError={() => setFailed(src)} /> : <span>{brand?.mark || name.slice(0, 2)}</span>}
   </span>;
 }
 export default function BrandPicker({ value, onChange, onSelect, records }) {

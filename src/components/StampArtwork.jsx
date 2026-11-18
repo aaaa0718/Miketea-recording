@@ -1,11 +1,12 @@
 import { useId } from 'react';
-import artwork from '../assets/embedded-art.json';
+import { useArtwork } from '../lib/useArtwork.js';
 
 // Illustration overlays include the drink, ingredients and AA together, with
 // genuine alpha around each subject. Changing a frame never simplifies the art.
 export default function StampArtwork({ design }) {
   const id = useId().replaceAll(':', '');
-  if (design.art) return <img src={artwork[`stamps/${design.art}.webp`]} width="300" height="300" alt="" />;
+  const src = useArtwork(design.art ? `stamps/${design.art}.webp` : `stamps/watercolor/${design.flavor}.webp`);
+  if (design.art) return <img src={src} width="300" height="300" alt="" />;
   const scallop = Array.from({ length: 160 }, (_, i) => {
     const angle = i * Math.PI / 80, radius = 133 + 4 * Math.cos(angle * 20);
     return `${150 + Math.cos(angle) * radius},${150 + Math.sin(angle) * radius}`;
@@ -28,7 +29,7 @@ export default function StampArtwork({ design }) {
       <rect width="300" height="300" fill={design.color} opacity=".13" filter={`url(#${id}-paper)`} />
       <g transform="translate(150 150) scale(.94) translate(-150 -150)" fill="none" stroke={design.ink} strokeWidth="1" opacity=".4">{frame}</g>
       <g transform="translate(150 150) scale(.9) translate(-150 -150)" fill="none" stroke={design.ink} strokeWidth="1.3" strokeDasharray="4 5" opacity=".65">{frame}</g>
-      <image href={artwork[`stamps/watercolor/${design.flavor}.webp`]} x={design.frame === 'ticket' ? 0 : 18} y={design.frame === 'ticket' ? 0 : 12} width={design.frame === 'ticket' ? 300 : 264} height={design.frame === 'ticket' ? 300 : 264} preserveAspectRatio="xMidYMid meet" />
+      <image href={src} x={design.frame === 'ticket' ? 0 : 18} y={design.frame === 'ticket' ? 0 : 12} width={design.frame === 'ticket' ? 300 : 264} height={design.frame === 'ticket' ? 300 : 264} preserveAspectRatio="xMidYMid meet" />
     </g>
   </svg>;
 }
